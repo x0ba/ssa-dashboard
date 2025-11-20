@@ -42,14 +42,17 @@ const sidebarItems = [
   {
     label: "Overview",
     link: "/",
+    id: 0,
   },
   {
     label: "Events",
     link: "/events",
+    id: 1,
   },
   {
     label: "Links",
     link: "/links",
+    id: 2,
   },
 ];
 
@@ -80,8 +83,8 @@ export function AppSidebar() {
               <CollapsibleContent>
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {sidebarItems.map((item, index) => (
-                      <SidebarMenuItem key={index + 1}>
+                    {sidebarItems.map((item) => (
+                      <SidebarMenuItem key={item.id}>
                         <SidebarMenuButton>
                           <Link href={item.link}>{item.label}</Link>
                         </SidebarMenuButton>
