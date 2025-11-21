@@ -1,0 +1,61 @@
+import { db } from "~/server/db";
+import { Search } from "~/_components/search";
+import { ilike } from "drizzle-orm";
+import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
+
+import { Link as LinkIcon } from "lucide-react";
+import Link from "next/link";
+
+export default async function LinksPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
+  const params = await searchParams;
+  const query = params.q ?? "";
+
+  const links = await db.query.links.findMany({
+    where: (links, { ilike }) =>
+      query ? ilike(links.name, `%${query}%`) : undefined,
+    orderBy: (model, { desc }) => desc(model.updatedAt),
+  });
+
+  return (
+    <main className="p-4">
+      <div className="mb-4">
+        <Search placeholder="Search links..." />
+      </div>
+      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        {links.map((link) => (
+          <Card
+            key={link.id}
+            className="py-0 transition-shadow duration-300 hover:shadow-lg"
+          >
+            <CardHeader className="flex flex-col gap-2 p-4">
+              <div className="flex flex-row items-start gap-3">
+                <LinkIcon className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
+                <div className="flex flex-col gap-1">
+                  <Link
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold transition-colors duration-300 hover:text-blue-800"
+                  >
+                    {link.name}
+                  </Link>
+                  <span className="w-fit rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
+                    {link.tag}
+                  </span>
+                </div>
+              </div>
+              <CardDescription className="text-muted-foreground text-sm">
+                {link.updatedAt?.toLocaleDateString() ??
+                  link.createdAt.toLocaleDateString()}
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        ))}
+      </div>
+    </main>
+  );
+}

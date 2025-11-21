@@ -6,8 +6,8 @@
 - [x] scaffold basic ui with mock data
 - [x] tidy up build process
 - [x] set up a database
-- [ ] attach database to ui
-- [ ] add auth
+- [x] attach database to ui
+- [x] add auth
 - [ ] add member props
 - [ ] add image upload
 - [ ] add error management
