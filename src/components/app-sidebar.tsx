@@ -24,7 +24,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
+
+import { Separator } from "./ui/separator";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -71,6 +72,7 @@ export function AppSidebar() {
             <h2 className="text-2xl font-bold">SSA Dashboard</h2>
           </div>
         </SidebarHeader>
+        <Separator />
         <SidebarContent>
           <Collapsible defaultOpen className="group/collapsible">
             <SidebarGroup>
