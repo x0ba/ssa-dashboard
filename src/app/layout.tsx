@@ -1,7 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs";
+import { SidebarInset, SidebarProvider } from "~/app/_components/ui/sidebar";
+import { AppSidebar } from "~/app/_components/app-sidebar";
 import "~/styles/globals.css";
-import { SidebarInset, SidebarProvider } from "~/_components/ui/sidebar";
-import { AppSidebar } from "~/_components/app-sidebar";
+// import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
 import { Inter } from "next/font/google";

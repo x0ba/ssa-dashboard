@@ -1,9 +1,11 @@
 import { db } from "~/server/db";
-import { Search } from "~/_components/search";
-import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
+import { Search } from "~/app/_components/search";
+import { Card, CardHeader, CardDescription } from "~/app/_components/ui/card";
 
 import { Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
+
+export const dynamic = "force-dynamic";
 
 export default async function LinksPage({
   searchParams,

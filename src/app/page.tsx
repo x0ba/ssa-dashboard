@@ -1,7 +1,6 @@
-import Link from "next/link";
-import { db } from "~/server/db";
-import { Card, CardContent } from "~/_components/ui/card";
+import { Card, CardContent } from "~/app/_components/ui/card";
 import { currentUser } from "@clerk/nextjs/server";
+import { UploadButton } from "~/utils/uploadthing";
 
 export const dynamic = "force-dynamic";
 
