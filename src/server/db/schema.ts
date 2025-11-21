@@ -11,11 +11,13 @@ import { index, pgTableCreator } from "drizzle-orm/pg-core";
  */
 export const createTable = pgTableCreator((name) => `ssamembers_${name}`);
 
-export const posts = createTable(
-  "post",
+export const links = createTable(
+  "link",
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
-    name: d.varchar({ length: 256 }),
+    name: d.varchar({ length: 256 }).notNull(),
+    url: d.varchar({ length: 1024 }).notNull(),
+    tag: d.varchar({ length: 256 }).default("General"),
     createdAt: d
       .timestamp({ withTimezone: true })
       .$defaultFn(() => /* @__PURE__ */ new Date())

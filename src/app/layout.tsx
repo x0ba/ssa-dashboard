@@ -1,6 +1,11 @@
+import { ClerkProvider, UserButton } from "@clerk/nextjs";
 import "~/styles/globals.css";
-import { SidebarProvider, SidebarTrigger } from "../components/ui/sidebar";
-import { AppSidebar } from "../components/app-sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/_components/ui/sidebar";
+import { AppSidebar } from "~/_components/app-sidebar";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
@@ -20,16 +25,15 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body>
-        <SidebarProvider>
-          <AppSidebar />
-          <main>
-            <SidebarTrigger className="p-5" />
-            {children}
-          </main>
-        </SidebarProvider>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className={`${geist.variable}`}>
+        <body>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>{children}</SidebarInset>
+          </SidebarProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
