@@ -25,7 +25,7 @@ export default async function LinksPage({
         <div className="flex flex-col gap-2">
           <h2 className="text-4xl font-bold">Links</h2>
           <p className="text-muted-foreground text-sm">
-            Manage your links here
+            Some useful links for members
           </p>
         </div>
         <span className="w-1/2">
