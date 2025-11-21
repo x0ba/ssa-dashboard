@@ -1,6 +1,5 @@
 import { db } from "~/server/db";
 import { Search } from "~/_components/search";
-import { ilike } from "drizzle-orm";
 import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
 
 import { Link as LinkIcon } from "lucide-react";
@@ -22,8 +21,16 @@ export default async function LinksPage({
 
   return (
     <main className="p-4">
-      <div className="mb-4">
-        <Search placeholder="Search links..." />
+      <div className="flex w-full items-start justify-between p-3 pb-5">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-4xl font-bold">Links</h2>
+          <p className="text-muted-foreground text-sm">
+            Manage your links here
+          </p>
+        </div>
+        <span className="w-1/2">
+          <Search placeholder="Search links..." />
+        </span>
       </div>
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {links.map((link) => (

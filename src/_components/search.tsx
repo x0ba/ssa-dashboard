@@ -2,6 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
+import { Search as SearchIcon } from "lucide-react";
 import { Input } from "~/_components/ui/input";
 
 export function Search({ placeholder }: { placeholder: string }) {
@@ -19,14 +20,17 @@ export function Search({ placeholder }: { placeholder: string }) {
       params.delete("q");
     }
     router.replace(`${pathname}?${params.toString()}`);
-  }, 300) as (term: string) => void;
+  }, 250) as (term: string) => void;
 
   return (
-    <Input
-      className="rounded border p-2"
-      placeholder={placeholder}
-      onChange={(e) => handleSearch(e.target.value)}
-      defaultValue={searchParams.get("q")?.toString()}
-    />
+    <div className="relative flex items-center">
+      <SearchIcon className="text-muted-foreground absolute left-3 h-4 w-4" />
+      <Input
+        className="rounded-lg border p-2 pl-9"
+        placeholder={placeholder}
+        onChange={(e) => handleSearch(e.target.value)}
+        defaultValue={searchParams.get("q")?.toString()}
+      />
+    </div>
   );
 }
