@@ -1,4 +1,4 @@
-import { db } from "~/server/db";
+import { searchLinks } from "~/server/queries";
 import { Search } from "~/app/_components/search";
 import { Card, CardHeader, CardDescription } from "~/app/_components/ui/card";
 
@@ -15,11 +15,7 @@ export default async function LinksPage({
   const params = await searchParams;
   const query = params.q ?? "";
 
-  const links = await db.query.links.findMany({
-    where: (links, { ilike }) =>
-      query ? ilike(links.name, `%${query}%`) : undefined,
-    orderBy: (model, { desc }) => desc(model.createdAt),
-  });
+  const links = await searchLinks(query);
 
   return (
     <main className="p-4">

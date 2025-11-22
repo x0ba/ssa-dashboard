@@ -1,5 +1,5 @@
 import { Search } from "~/app/_components/search";
-import { db } from "~/server/db";
+import { searchEvents } from "~/server/queries";
 import {
   Card,
   CardHeader,
@@ -19,11 +19,7 @@ export default async function EventsPage({
   const params = await searchParams;
   const query = params.q ?? "";
 
-  const events = await db.query.events.findMany({
-    where: (events, { ilike }) =>
-      query ? ilike(events.name, `%${query}%`) : undefined,
-    orderBy: (model, { desc }) => desc(model.date),
-  });
+  const events = await searchEvents(query);
 
   return (
     <main className="p-4">

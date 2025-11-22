@@ -5,7 +5,7 @@ import {
   CardHeader,
 } from "~/app/_components/ui/card";
 import { currentUser } from "@clerk/nextjs/server";
-import { db } from "~/server/db";
+import { getRecentEvents, getRecentLinks } from "~/server/queries";
 import Link from "next/link";
 import {
   Calendar,
@@ -22,14 +22,8 @@ export default async function HomePage() {
   const user = await currentUser();
   const userName = user?.fullName;
   const currentDate = new Date().toLocaleDateString();
-  const events = await db.query.events.findMany({
-    limit: 3,
-    orderBy: (model, { desc }) => desc(model.date),
-  });
-  const links = await db.query.links.findMany({
-    limit: 4,
-    orderBy: (model, { desc }) => desc(model.createdAt),
-  });
+  const events = await getRecentEvents(3);
+  const links = await getRecentLinks(4);
 
   const memberInfo = {
     eventsAttended: 67,
