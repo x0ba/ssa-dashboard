@@ -1,6 +1,10 @@
 import "~/styles/globals.css";
 
-import { SidebarInset, SidebarProvider } from "~/app/_components/ui/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "~/app/_components/ui/sidebar";
 import { AppSidebar } from "~/app/_components/app-sidebar";
 import { ThemeProvider } from "~/app/_components/theme-provider";
 // import "@uploadthing/react/styles.css";
@@ -46,7 +50,12 @@ export default function RootLayout({
             >
               <SidebarProvider>
                 <AppSidebar />
-                <SidebarInset>{children}</SidebarInset>
+                <SidebarInset>
+                  <header className="flex h-16 items-center gap-2 px-4 md:hidden">
+                    <SidebarTrigger />
+                  </header>
+                  {children}
+                </SidebarInset>
               </SidebarProvider>
             </ThemeProvider>
           </body>

@@ -22,9 +22,15 @@ import {
 import { Separator } from "./ui/separator";
 
 import Image from "next/image";
-import { Calendar, ChevronDown, LayoutDashboard, Link } from "lucide-react";
+import {
+  Calendar,
+  ChevronDown,
+  LayoutDashboard,
+  Link as LinkIcon,
+} from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const sidebarItems = [
   {
@@ -42,7 +48,7 @@ const sidebarItems = [
   {
     label: "Links",
     link: "/links",
-    icon: Link,
+    icon: LinkIcon,
     id: 2,
   },
 ];
@@ -82,10 +88,10 @@ export function AppSidebar() {
                       return (
                         <SidebarMenuItem key={item.id}>
                           <SidebarMenuButton asChild isActive={isActive}>
-                            <a href={item.link}>
+                            <Link href={item.link}>
                               <Icon />
-                              {item.label}
-                            </a>
+                              <span>{item.label}</span>
+                            </Link>
                           </SidebarMenuButton>
                         </SidebarMenuItem>
                       );
