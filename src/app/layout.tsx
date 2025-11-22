@@ -9,6 +9,7 @@ import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/themes";
 import { Inter } from "next/font/google";
+import { PostHogProvider } from "./_analytics/provider";
 
 export const metadata: Metadata = {
   title: "SSA Member Dashboard",
@@ -30,21 +31,27 @@ export default function RootLayout({
         theme: shadcn,
       }}
     >
-      <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
-        <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarInset>{children}</SidebarInset>
-            </SidebarProvider>
-          </ThemeProvider>
-        </body>
-      </html>
+      <PostHogProvider>
+        <html
+          lang="en"
+          className={`${inter.variable}`}
+          suppressHydrationWarning
+        >
+          <body>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>{children}</SidebarInset>
+              </SidebarProvider>
+            </ThemeProvider>
+          </body>
+        </html>
+      </PostHogProvider>
     </ClerkProvider>
   );
 }

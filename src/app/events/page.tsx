@@ -80,6 +80,8 @@ export default async function EventsPage({
               <Image
                 src={event.imageUrl}
                 alt={event.name}
+                width={800}
+                height={600}
                 className="h-auto w-full object-contain"
               />
             </div>

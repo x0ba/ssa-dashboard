@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/daniel-xu-wv/ssa-dashboard",
+      "type": "http"
+    }
+  }
+}
