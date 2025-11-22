@@ -1,97 +1,48 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "~/app/_components/ui/card";
+import { Card, CardContent } from "~/app/_components/ui/card";
 import { currentUser } from "@clerk/nextjs/server";
-import { getRecentEvents, getRecentLinks } from "~/server/queries";
-import Link from "next/link";
-import {
-  Calendar,
-  Clock,
-  ExternalLink,
-  LinkIcon,
-  MapPin,
-  Music,
-} from "lucide-react";
+import { Music } from "lucide-react";
+import { Suspense } from "react";
+import { RecentEventsSection } from "~/app/_components/sections/recent-events-section";
+import { RecentLinksSection } from "~/app/_components/sections/recent-links-section";
+import { Skeleton } from "~/app/_components/ui/skeleton";
 
 export const dynamic = "force-dynamic";
+
+function EventsCardSkeleton() {
+  return (
+    <Card className="gap-2">
+      <div className="p-6">
+        <Skeleton className="h-8 w-48" />
+      </div>
+      <div className="flex flex-col gap-3 px-6 pb-6">
+        <Skeleton className="h-4 w-full" />
+        <Skeleton className="h-4 w-3/4" />
+        <Skeleton className="h-4 w-5/6" />
+      </div>
+    </Card>
+  );
+}
+
+function LinksCardSkeleton() {
+  return (
+    <Card className="gap-2 sm:col-span-1 lg:col-span-2">
+      <div className="p-6">
+        <Skeleton className="h-8 w-48" />
+      </div>
+      <div className="grid grid-cols-1 justify-items-center gap-4 px-6 pb-6 lg:grid-cols-2">
+        <Skeleton className="h-32 w-full max-w-[320px]" />
+        <Skeleton className="h-32 w-full max-w-[320px]" />
+        <Skeleton className="h-32 w-full max-w-[320px]" />
+        <Skeleton className="h-32 w-full max-w-[320px]" />
+      </div>
+    </Card>
+  );
+}
 
 export default async function HomePage() {
   const user = await currentUser();
   const userName = user?.fullName;
   const currentDate = new Date().toLocaleDateString();
-  const events = await getRecentEvents(3);
-  const links = await getRecentLinks(4);
-
-  const memberInfo = {
-    eventsAttended: 67,
-  };
-
-  function eventList() {
-    return events.map((event) => (
-      <div key={event.id} className="mb-2 flex flex-col gap-1">
-        <span className="font-medium">{event.name}</span>
-        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-          <Calendar className="h-4 w-4" />
-          {new Date(event.date).toLocaleDateString("en-US", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          })}
-        </div>
-        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-          <Clock className="h-4 w-4" />
-          {(() => {
-            const date = new Date(event.date);
-            const hours = date.getUTCHours();
-            const minutes = date.getUTCMinutes();
-            const hour12 = hours % 12 || 12;
-            const ampm = hours >= 12 ? "PM" : "AM";
-            const minutesStr = minutes.toString().padStart(2, "0");
-            return `${hour12}:${minutesStr} ${ampm}`;
-          })()}
-        </div>
-        <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-          <MapPin className="h-4 w-4" />
-          {event.location}
-        </div>
-      </div>
-    ));
-  }
-
-  function linkCards() {
-    return links.map((link) => (
-      <Card
-        key={link.id}
-        className="w-full max-w-[320px] py-0 transition-shadow duration-300 hover:shadow-lg"
-      >
-        <CardHeader className="flex flex-col gap-2 p-4">
-          <div className="flex flex-row items-start gap-3">
-            <LinkIcon className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
-            <div className="flex flex-col gap-1">
-              <Link
-                href={link.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-semibold transition-colors duration-300 hover:text-blue-800"
-              >
-                {link.name}
-              </Link>
-              <span className="w-fit rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
-                {link.tag}
-              </span>
-            </div>
-          </div>
-          <CardDescription className="text-muted-foreground text-sm">
-            {link.updatedAt?.toLocaleDateString() ??
-              link.createdAt.toLocaleDateString()}
-          </CardDescription>
-        </CardHeader>
-      </Card>
-    ));
-  }
 
   return (
     <main className="p-6">
@@ -111,61 +62,12 @@ export default async function HomePage() {
         </CardContent>
       </Card>
       <div className="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {/* <Card className="col-span-2 gap-2">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold">Events Attended</span>
-            </div>
-          </CardHeader>
-        </Card>
-        <Card className="col-span-1 gap-2">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold">Events Attended</span>
-            </div>
-          </CardHeader>
-        </Card>
-        <Card className="col-span-1 gap-2">
-          <CardHeader>
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-bold">Events Attended</span>
-            </div>
-          </CardHeader>
-        </Card> */}
-        <Card className="gap-2">
-          <CardHeader>
-            <span className="text-2xl font-bold">Upcoming Events</span>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            {events.length === 0 ? (
-              <span className="text-muted-foreground mb-2">
-                No upcoming events :(
-              </span>
-            ) : (
-              eventList()
-            )}
-            <Link
-              href="/events"
-              className="text-muted-foreground flex items-center gap-1.5 text-sm hover:underline"
-            >
-              <ExternalLink width={16} height={16} /> See all
-            </Link>
-          </CardContent>
-        </Card>
-        <Card className="gap-2 sm:col-span-1 lg:col-span-2">
-          <CardHeader>
-            <span className="text-2xl font-bold">Recent Links</span>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            {links.length === 0 ? (
-              <span className="text-muted-foreground mb-2">No linkies :(</span>
-            ) : (
-              <div className="grid grid-cols-1 justify-items-center gap-4 lg:grid-cols-2">
-                {linkCards()}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+        <Suspense fallback={<EventsCardSkeleton />}>
+          <RecentEventsSection />
+        </Suspense>
+        <Suspense fallback={<LinksCardSkeleton />}>
+          <RecentLinksSection />
+        </Suspense>
       </div>
     </main>
   );
