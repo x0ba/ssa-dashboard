@@ -2,7 +2,7 @@ import { db } from "~/server/db";
 import { Search } from "~/app/_components/search";
 import { Card, CardHeader, CardDescription } from "~/app/_components/ui/card";
 
-import { Link as LinkIcon } from "lucide-react";
+import { Calendar, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -57,9 +57,12 @@ export default async function LinksPage({
                   </span>
                 </div>
               </div>
-              <CardDescription className="text-muted-foreground text-sm">
-                {link.updatedAt?.toLocaleDateString() ??
-                  link.createdAt.toLocaleDateString()}
+              <CardDescription className="text-muted-foreground mt-2 text-sm">
+                <div className="flex items-center gap-1.5">
+                  <Calendar className="h-4 w-4" />
+                  {link.updatedAt?.toLocaleDateString() ??
+                    link.createdAt.toLocaleDateString()}
+                </div>
               </CardDescription>
             </CardHeader>
           </Card>

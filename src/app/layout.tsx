@@ -1,10 +1,13 @@
-import { ClerkProvider } from "@clerk/nextjs";
+import "~/styles/globals.css";
+
 import { SidebarInset, SidebarProvider } from "~/app/_components/ui/sidebar";
 import { AppSidebar } from "~/app/_components/app-sidebar";
-import "~/styles/globals.css";
+import { ThemeProvider } from "~/app/_components/theme-provider";
 // import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
+import { ClerkProvider } from "@clerk/nextjs";
+import { shadcn } from "@clerk/themes";
 import { Inter } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -22,13 +25,24 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
-      <html lang="en" className={`${inter.variable}`}>
+    <ClerkProvider
+      appearance={{
+        theme: shadcn,
+      }}
+    >
+      <html lang="en" className={`${inter.variable}`} suppressHydrationWarning>
         <body>
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>{children}</SidebarInset>
-          </SidebarProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarInset>{children}</SidebarInset>
+            </SidebarProvider>
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>
