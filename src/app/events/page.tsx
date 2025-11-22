@@ -71,14 +71,12 @@ export default async function EventsPage({
                 </CardDescription>
               </CardHeader>
             </div>
-            <div className="w-full">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
+            <div className="relative h-64 w-full">
               <Image
                 src={event.imageUrl}
                 alt={event.name}
-                width={800}
-                height={600}
-                className="h-auto w-full object-contain"
+                fill
+                className="object-cover"
               />
             </div>
           </Card>
