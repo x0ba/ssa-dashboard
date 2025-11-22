@@ -18,7 +18,7 @@ export default async function LinksPage({
   const links = await db.query.links.findMany({
     where: (links, { ilike }) =>
       query ? ilike(links.name, `%${query}%`) : undefined,
-    orderBy: (model, { desc }) => desc(model.updatedAt),
+    orderBy: (model, { desc }) => desc(model.createdAt),
   });
 
   return (

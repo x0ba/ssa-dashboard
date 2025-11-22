@@ -6,6 +6,7 @@ import {
   CardDescription,
   CardTitle,
 } from "~/app/_components/ui/card";
+import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
 export const dynamic = "force-dynamic";
@@ -76,7 +77,7 @@ export default async function EventsPage({
             </div>
             <div className="w-full">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={event.imageUrl}
                 alt={event.name}
                 className="h-auto w-full object-contain"

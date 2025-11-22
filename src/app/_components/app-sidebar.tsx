@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Sidebar,
   SidebarContent,
@@ -17,48 +19,36 @@ import {
   CollapsibleTrigger,
 } from "./ui/collapsible";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-
 import { Separator } from "./ui/separator";
 
-import Link from "next/link";
 import Image from "next/image";
-import { ChevronDown, ChevronUp, User2 } from "lucide-react";
+import { Calendar, ChevronDown, LayoutDashboard, Link } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
-
-const memberInfo = {
-  name: "Daniel Xu",
-  email: "ddxu@ucsd.edu",
-  role: "Member",
-  image:
-    "https://ba961nquml.ufs.sh/f/8WZL3qQlnribccjRQcHJmjybTOUgLDCH1Xz7RoWupVSqhi45",
-};
+import { usePathname } from "next/navigation";
 
 const sidebarItems = [
   {
     label: "Overview",
     link: "/",
+    icon: LayoutDashboard,
     id: 0,
   },
   {
     label: "Events",
     link: "/events",
+    icon: Calendar,
     id: 1,
   },
   {
     label: "Links",
     link: "/links",
+    icon: Link,
     id: 2,
   },
 ];
 
 export function AppSidebar() {
+  const pathname = usePathname();
   return (
     <>
       <Sidebar>
@@ -86,13 +76,20 @@ export function AppSidebar() {
               <CollapsibleContent>
                 <SidebarGroupContent>
                   <SidebarMenu>
-                    {sidebarItems.map((item) => (
-                      <SidebarMenuItem key={item.id}>
-                        <SidebarMenuButton asChild>
-                          <a href={item.link}>{item.label}</a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    ))}
+                    {sidebarItems.map((item) => {
+                      const isActive = pathname === item.link;
+                      const Icon = item.icon;
+                      return (
+                        <SidebarMenuItem key={item.id}>
+                          <SidebarMenuButton asChild isActive={isActive}>
+                            <a href={item.link}>
+                              <Icon />
+                              {item.label}
+                            </a>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      );
+                    })}
                   </SidebarMenu>
                 </SidebarGroupContent>
               </CollapsibleContent>
