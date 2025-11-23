@@ -1,8 +1,5 @@
 import { Search } from "~/app/_components/search";
 import { LinksGrid } from "~/app/_components/sections/admin-links-grid";
-import { Button } from "~/app/_components/ui/button";
-import { LinksGridSkeleton } from "~/app/_components/loading/links-grid-skeleton";
-import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -27,9 +24,7 @@ export default async function LinksAdminPage({
           <Search placeholder="Search links..." />
         </span>
       </div>
-      <Suspense key={query} fallback={<LinksGridSkeleton />}>
-        <LinksGrid searchQuery={query} />
-      </Suspense>
+      <LinksGrid searchQuery={query} />
     </main>
   );
 }

@@ -1,7 +1,5 @@
 import { Search } from "~/app/_components/search";
 import { EventsGrid } from "~/app/_components/sections/events-grid";
-import { EventsGridSkeleton } from "~/app/_components/loading/events-grid-skeleton";
-import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -26,9 +24,7 @@ export default async function EventsPage({
           <Search placeholder="Search events..." />
         </span>
       </div>
-      <Suspense key={query} fallback={<EventsGridSkeleton />}>
-        <EventsGrid searchQuery={query} />
-      </Suspense>
+      <EventsGrid searchQuery={query} />
     </main>
   );
 }
