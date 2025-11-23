@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader } from "../ui/card";
 import { getRecentLinks } from "~/server/queries";
 import Link from "next/link";
-import { Calendar, ExternalLink, Link as LinkIcon } from "lucide-react";
+import { Link as LinkIcon } from "lucide-react";
 
 export async function RecentLinksSection() {
   const links = await getRecentLinks(4);

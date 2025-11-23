@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <ClerkProvider
       appearance={{
-        theme: shadcn,
+        baseTheme: shadcn,
       }}
     >
       <PostHogProvider>
@@ -41,7 +41,7 @@ export default function RootLayout({
           className={`${inter.variable}`}
           suppressHydrationWarning
         >
-          <body>
+          <body suppressHydrationWarning>
             <ThemeProvider
               attribute="class"
               defaultTheme="system"

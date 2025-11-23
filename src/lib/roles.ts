@@ -1,4 +1,4 @@
-import { Roles } from "~/lib/types/globals";
+import type { Roles } from "~/lib/types/globals";
 import { auth } from "@clerk/nextjs/server";
 
 export const checkRole = async (role: Roles) => {

@@ -4,7 +4,7 @@ import { Skeleton } from "../ui/skeleton";
 export function LinksGridSkeleton() {
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {[...Array(6)].map((_, i) => (
+      {Array.from({ length: 6 }).map((_, i) => (
         <Card key={i} className="py-0">
           <CardHeader className="flex flex-col gap-2 p-4">
             <div className="flex flex-row items-start gap-3">

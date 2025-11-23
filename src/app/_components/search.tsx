@@ -11,7 +11,6 @@ export function Search({ placeholder }: { placeholder: string }) {
   const router = useRouter();
 
   // Debounce prevents updating the URL on every single keystroke
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const handleSearch = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(searchParams?.toString());
     if (term) {
