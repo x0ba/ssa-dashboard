@@ -18,6 +18,7 @@ import { getHomepageData } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";
 import type { InferSelectModel } from "drizzle-orm";
 import type { events as eventsTable, links as linksTable } from "~/server/db/schema";
+import { currentUser } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
 
@@ -147,7 +148,10 @@ function RecentLinksSection({ links }: { links: LinkType[] }) {
 }
 
 export default async function HomePage() {
-  const { user, events, links } = await getHomepageData();
+  const [user, { events, links }] = await Promise.all([
+    currentUser(),
+    getHomepageData(),
+  ]);
 
   return (
     <main className="p-6">
@@ -163,7 +167,7 @@ export default async function HomePage() {
             </span>
           </CardHeader>
         </Card>
-        <UserInfoSection />
+        <UserInfoSection user={user} />
       </div>
     </main>
   );

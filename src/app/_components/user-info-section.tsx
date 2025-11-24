@@ -1,6 +1,4 @@
-"use client";
-
-import { useUser } from "@clerk/nextjs";
+import type { User } from "@clerk/nextjs/server";
 import {
   Music,
   UserIcon,
@@ -9,16 +7,13 @@ import {
 } from "~/_components/icons";
 import { Card, CardContent, CardHeader } from "~/_components/ui/card";
 
-export function UserInfoSection() {
-  const { user } = useUser();
+export function UserInfoSection({ user }: { user: User | null }) {
   const userInstrument = user?.publicMetadata.instrument as string | undefined;
   const userMajor = user?.publicMetadata.major as string | undefined;
   const userGraduationYear = user?.publicMetadata.graduationYear as
     | string
     | undefined;
-  const userEmailAddresses = user?.emailAddresses as
-    | { emailAddress: string }[]
-    | undefined;
+  const userEmailAddresses = user?.emailAddresses;
 
   return (
     <Card className="gap-2 sm:col-span-1 lg:col-span-1">

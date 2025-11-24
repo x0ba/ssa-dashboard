@@ -1,15 +1,13 @@
 import "server-only";
 import { db } from "~/server/db";
-import { currentUser } from "@clerk/nextjs/server";
 
 export async function getHomepageData() {
-  const [user, events, links] = await Promise.all([
-    currentUser(),
+  const [events, links] = await Promise.all([
     getRecentEvents(3),
     getRecentLinks(4),
   ]);
 
-  return { user, events, links };
+  return { events, links };
 }
 
 export async function getRecentEvents(limit: number) {
