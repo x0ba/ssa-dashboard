@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { useEffect } from "react";
 import { Inter } from "next/font/google";
 import "~/styles/globals.css";
-import { Button } from "~/app/_components/ui/button";
+import { Button } from "~/_components/ui/button";
 import {
   Card,
   CardHeader,
@@ -12,7 +12,7 @@ import {
   CardDescription,
   CardFooter,
   CardContent,
-} from "~/app/_components/ui/card";
+} from "~/_components/ui/card";
 import { AlertCircle } from "lucide-react";
 
 const inter = Inter({
@@ -43,7 +43,7 @@ export default function GlobalError({
               <CardTitle className="text-2xl font-bold">
                 Something went wrong!
               </CardTitle>
-              <CardDescription className="text-balance pt-2">
+              <CardDescription className="pt-2 text-balance">
                 We apologize for the inconvenience. An unexpected error has
                 occurred.
               </CardDescription>

@@ -11,15 +11,15 @@ import {
   SidebarHeader,
   SidebarMenuItem,
   SidebarGroupContent,
-} from "./ui/sidebar";
+} from "~/_components/ui/sidebar";
 
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "./ui/collapsible";
+} from "~/_components/ui/collapsible";
 
-import { Separator } from "./ui/separator";
+import { Separator } from "~/_components/ui/separator";
 
 import Image from "next/image";
 import {

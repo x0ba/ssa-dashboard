@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.20.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Run linter
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Build
+        run: pnpm build
+        env:
+          # Skip telemetry during CI builds
+          NEXT_TELEMETRY_DISABLED: 1
+          # Provide dummy values for required env vars (build validation only)
+          DATABASE_URL: postgresql://dummy:dummy@localhost:5432/dummy
+          NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_dummy
+          CLERK_SECRET_KEY: sk_test_dummy
+          UPLOADTHING_TOKEN: dummy
+          SENTRY_AUTH_TOKEN: dummy
+          NEXT_PUBLIC_POSTHOG_KEY: dummy
+          NEXT_PUBLIC_POSTHOG_HOST: https://dummy.posthog.com

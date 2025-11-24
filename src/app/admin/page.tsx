@@ -9,8 +9,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "~/app/_components/ui/card";
-import { Button } from "~/app/_components/ui/button";
+} from "~/_components/ui/card";
+import { Button } from "~/_components/ui/button";
 
 export default async function AdminDashboard(params: {
   searchParams: Promise<{ search?: string }>;

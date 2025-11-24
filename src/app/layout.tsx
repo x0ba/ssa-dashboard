@@ -1,12 +1,7 @@
 import "~/styles/globals.css";
 
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "~/app/_components/ui/sidebar";
-import { AppSidebar } from "~/app/_components/app-sidebar";
 import { ThemeProvider } from "~/app/_components/theme-provider";
+import { SidebarLayout } from "~/app/_components/sidebar-layout";
 // import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
@@ -30,11 +25,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        baseTheme: shadcn,
-      }}
-    >
+    <ClerkProvider appearance={{ theme: shadcn }}>
       <PostHogProvider>
         <html
           lang="en"
@@ -48,15 +39,7 @@ export default function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <SidebarProvider>
-                <AppSidebar />
-                <SidebarInset>
-                  <header className="flex h-16 items-center gap-2 px-4 md:hidden">
-                    <SidebarTrigger />
-                  </header>
-                  {children}
-                </SidebarInset>
-              </SidebarProvider>
+              <SidebarLayout>{children}</SidebarLayout>
             </ThemeProvider>
           </body>
         </html>
