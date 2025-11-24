@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "~/_components/ui/card";
 import Image from "next/image";
-import { Calendar, Clock, MapPin } from "lucide-react";
+import { Calendar, Clock, MapPin } from "~/_components/icons";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {events.map((event) => (
+      {events.map((event, index) => (
         <Card
           key={event.id}
           className="flex flex-col gap-0 overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
@@ -57,6 +57,8 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
               src={event.imageUrl}
               alt={event.name}
               fill
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+              priority={index < 4}
               className="object-cover"
             />
           </div>

@@ -13,7 +13,7 @@ import {
   CardFooter,
   CardContent,
 } from "~/_components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { AlertCircle } from "~/_components/icons";
 
 const inter = Inter({
   subsets: ["latin"],

@@ -7,7 +7,7 @@ import {
   CardDescription,
   CardFooter,
 } from "~/_components/ui/card";
-import { FileQuestion } from "lucide-react";
+import { FileQuestion } from "~/_components/icons";
 
 export default function NotFound() {
   return (

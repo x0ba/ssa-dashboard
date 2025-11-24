@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardAction,
 } from "~/_components/ui/card";
-import { Calendar, Link as LinkIcon } from "lucide-react";
+import { Calendar, LinkIcon } from "~/_components/icons";
 import { Button } from "~/_components/ui/button";
 import Link from "next/link";
 

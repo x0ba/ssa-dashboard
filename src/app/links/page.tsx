@@ -1,7 +1,7 @@
 import { Search } from "~/app/_components/search";
 import { searchLinks } from "~/server/queries";
 import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
-import { Calendar, Link as LinkIcon } from "lucide-react";
+import { Calendar, LinkIcon } from "~/_components/icons";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";

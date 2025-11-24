@@ -4,23 +4,27 @@ import {
   CardDescription,
   CardHeader,
 } from "~/_components/ui/card";
-import { currentUser } from "@clerk/nextjs/server";
+import type { User } from "@clerk/nextjs/server";
 import {
   Calendar,
   Clock,
   ExternalLink,
-  Link as LinkIcon,
+  LinkIcon,
   MapPin,
   Music,
-} from "lucide-react";
+} from "~/_components/icons";
 import Link from "next/link";
-import { getRecentEvents, getRecentLinks } from "~/server/queries";
+import { getHomepageData } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";
+import type { InferSelectModel } from "drizzle-orm";
+import type { events as eventsTable, links as linksTable } from "~/server/db/schema";
 
 export const dynamic = "force-dynamic";
 
-async function WelcomeSection() {
-  const user = await currentUser();
+type Event = InferSelectModel<typeof eventsTable>;
+type LinkType = InferSelectModel<typeof linksTable>;
+
+function WelcomeSection({ user }: { user: User | null }) {
   const userName = user?.fullName;
   const currentDate = new Date().toLocaleDateString();
 
@@ -42,9 +46,7 @@ async function WelcomeSection() {
   );
 }
 
-async function RecentEventsSection() {
-  const events = await getRecentEvents(3);
-
+function RecentEventsSection({ events }: { events: Event[] }) {
   return (
     <Card className="gap-2">
       <CardHeader>
@@ -97,9 +99,7 @@ async function RecentEventsSection() {
   );
 }
 
-async function RecentLinksSection() {
-  const links = await getRecentLinks(4);
-
+function RecentLinksSection({ links }: { links: LinkType[] }) {
   return (
     <Card className="gap-2 sm:col-span-1 lg:col-span-2">
       <CardHeader>
@@ -146,14 +146,16 @@ async function RecentLinksSection() {
   );
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { user, events, links } = await getHomepageData();
+
   return (
     <main className="p-6">
       <h1 className="text-4xl font-bold">Overview</h1>
-      <WelcomeSection />
+      <WelcomeSection user={user} />
       <div className="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <RecentEventsSection />
-        <RecentLinksSection />
+        <RecentEventsSection events={events} />
+        <RecentLinksSection links={links} />
         <Card className="gap-2 sm:col-span-1 lg:col-span-2">
           <CardHeader>
             <span className="text-2xl font-bold">

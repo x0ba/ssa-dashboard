@@ -1,41 +1,28 @@
 // app/providers.tsx
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 
-import posthog from "posthog-js";
-import { PostHogProvider as PHProvider } from "posthog-js/react";
-import { useAuth, useUser } from "@clerk/nextjs";
+// Lazy load PostHog to reduce initial bundle size
+const PostHogProviderClient = dynamic(
+  () =>
+    import("./provider-client").then((mod) => ({
+      default: mod.PostHogProviderClient,
+    })),
+  { ssr: false },
+);
 
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-      api_host: "/relay-uY0p",
-      ui_host: "https://us.posthog.com",
-    });
+    setMounted(true);
   }, []);
 
-  return (
-    <PHProvider client={posthog}>
-      <PostHogAuthWrapper>{children}</PostHogAuthWrapper>
-    </PHProvider>
-  );
-}
+  if (!mounted) {
+    return <>{children}</>;
+  }
 
-function PostHogAuthWrapper({ children }: { children: React.ReactNode }) {
-  const auth = useAuth();
-  const userInfo = useUser();
-
-  useEffect(() => {
-    if (userInfo.user) {
-      posthog.identify(userInfo.user.id, {
-        email: userInfo.user.emailAddresses[0]?.emailAddress,
-        name: userInfo.user.fullName,
-      });
-    } else if (!auth.isSignedIn) {
-      posthog.reset();
-    }
-  }, [auth, userInfo]);
-
-  return children;
+  return <PostHogProviderClient>{children}</PostHogProviderClient>;
 }

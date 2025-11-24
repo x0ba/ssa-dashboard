@@ -1,4 +1,4 @@
-import { Loader2 } from "lucide-react";
+import { Loader2 } from "~/_components/icons";
 import { type Metadata } from "next";
 
 export const metadata: Metadata = {

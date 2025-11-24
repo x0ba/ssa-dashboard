@@ -3,10 +3,10 @@
 import { useUser } from "@clerk/nextjs";
 import {
   Music,
-  User as UserIcon,
+  UserIcon,
   GraduationCap,
   BookOpenText,
-} from "lucide-react";
+} from "~/_components/icons";
 import { Card, CardContent, CardHeader } from "~/_components/ui/card";
 
 export function UserInfoSection() {

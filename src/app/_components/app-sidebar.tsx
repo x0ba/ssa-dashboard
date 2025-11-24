@@ -26,8 +26,8 @@ import {
   Calendar,
   ChevronDown,
   LayoutDashboard,
-  Link as LinkIcon,
-} from "lucide-react";
+  LinkIcon,
+} from "~/_components/icons";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -65,6 +65,7 @@ export function AppSidebar() {
               alt="SSA Logo"
               width={32}
               height={32}
+              priority
             />
             <h2 className="text-2xl font-bold">SSA Dashboard</h2>
           </div>
