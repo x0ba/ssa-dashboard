@@ -1,4 +1,11 @@
 import { Loader2 } from "lucide-react";
+import { type Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "SSA Member Dashboard",
+  description: "A dashboard for SSA members and board members",
+  icons: [{ rel: "icon", url: "/favicon.ico" }],
+};
 
 export default function Loading() {
   return (

@@ -38,7 +38,7 @@ export default function OnboardingComponent() {
     <div className="flex min-h-screen items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Welcome!</CardTitle>
+          <CardTitle>Welcome to SSA!</CardTitle>
           <CardDescription>
             Please tell us a bit about yourself to get started.
           </CardDescription>
