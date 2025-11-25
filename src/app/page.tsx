@@ -9,10 +9,10 @@ import {
   Calendar,
   Clock,
   ExternalLink,
-  LinkIcon,
+  Link as LinkIcon,
   MapPin,
   Music,
-} from "~/_components/icons";
+} from "lucide-react";
 import Link from "next/link";
 import { getHomepageData } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";

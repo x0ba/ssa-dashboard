@@ -26,8 +26,8 @@ import {
   Calendar,
   ChevronDown,
   LayoutDashboard,
-  LinkIcon,
-} from "~/_components/icons";
+  Link as LinkIcon,
+} from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

@@ -1,10 +1,10 @@
 import type { User } from "@clerk/nextjs/server";
 import {
   Music,
-  UserIcon,
+  User as UserIcon,
   GraduationCap,
   BookOpenText,
-} from "~/_components/icons";
+} from "lucide-react";
 import { Card, CardContent, CardHeader } from "~/_components/ui/card";
 
 export function UserInfoSection({ user }: { user: User | null }) {

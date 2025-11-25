@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
-import { SearchIcon } from "~/_components/icons";
+import { Search as SearchIcon } from "lucide-react";
 import { Input } from "~/_components/ui/input";
 
 export function Search({ placeholder }: { placeholder: string }) {

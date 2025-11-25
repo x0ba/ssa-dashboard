@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "~/_components/ui/card";
 import Image from "next/image";
-import { Calendar, Clock, MapPin } from "~/_components/icons";
+import { Calendar, Clock, MapPin } from "lucide-react";
 
 export const dynamic = "force-dynamic";
 

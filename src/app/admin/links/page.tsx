@@ -6,11 +6,119 @@ import {
   CardDescription,
   CardAction,
 } from "~/_components/ui/card";
-import { Calendar, LinkIcon } from "~/_components/icons";
+import { Calendar, Edit, Link as LinkIcon } from "lucide-react";
 import { Button } from "~/_components/ui/button";
 import Link from "next/link";
 
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "~/_components/ui/sheet";
+import {
+  Field,
+  FieldDescription,
+  FieldGroup,
+  FieldLabel,
+} from "~/_components/ui/field";
+import { Input } from "~/_components/ui/input";
+
 export const dynamic = "force-dynamic";
+
+function EditSheet({ linkId }: { linkId?: number }) {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Edit Link</Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col">
+        <SheetHeader>
+          <SheetTitle>Edit Link</SheetTitle>
+          <SheetDescription>
+            Make changes to the link details and save your changes.
+          </SheetDescription>
+        </SheetHeader>
+        <form className="flex flex-1 flex-col">
+          <div className="flex-1 overflow-y-auto px-4">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="title">Title</FieldLabel>
+                <Input id="title" name="title" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="url">URL</FieldLabel>
+                <Input id="url" name="url" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="tag">Tag</FieldLabel>
+                <Input id="tag" name="tag" required />
+              </Field>
+            </FieldGroup>
+          </div>
+          <SheetFooter>
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
+          </SheetFooter>
+        </form>
+      </SheetContent>
+    </Sheet>
+  );
+}
+
+function AddSheet() {
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="outline">Create Link</Button>
+      </SheetTrigger>
+      <SheetContent className="flex flex-col">
+        <SheetHeader>
+          <SheetTitle>Create Link</SheetTitle>
+          <SheetDescription>
+            Create a new link for members to view.
+          </SheetDescription>
+        </SheetHeader>
+        <form className="flex flex-1 flex-col">
+          <div className="flex-1 overflow-y-auto px-4">
+            <FieldGroup>
+              <Field>
+                <FieldLabel htmlFor="title">Title</FieldLabel>
+                <FieldDescription>The name of the link.</FieldDescription>
+                <Input id="title" name="title" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="url">URL</FieldLabel>
+                <FieldDescription>
+                  The destination URL of the link. Include the https:// at the
+                  beginning.
+                </FieldDescription>
+                <Input id="url" name="url" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="tag">Tag</FieldLabel>
+                <Input id="tag" name="tag" required />
+              </Field>
+            </FieldGroup>
+          </div>
+          <SheetFooter>
+            <Button type="submit" className="w-full">
+              Submit
+            </Button>
+          </SheetFooter>
+        </form>
+      </SheetContent>
+    </Sheet>
+  );
+}
 
 async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
   const links = await searchLinks(searchQuery);
@@ -47,9 +155,9 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
               </div>
             </CardDescription>
             <CardAction className="mt-2 flex w-full justify-center">
-              <Button asChild variant="outline" className="w-full">
-                <Link href={`/admin/links/${link.id}`}>Edit</Link>
-              </Button>
+              <span className="w-full">
+                <EditSheet linkId={link.id} />
+              </span>
             </CardAction>
           </CardHeader>
         </Card>
@@ -75,8 +183,11 @@ export default async function LinksAdminPage({
             Add, edit, and manage links for members
           </p>
         </div>
-        <span className="w-1/2">
+        <span className="w-3/5">
           <Search placeholder="Search links..." />
+        </span>
+        <span className="flex w-1/4 justify-end">
+          <AddSheet />
         </span>
       </div>
       <LinksGrid searchQuery={query} />
