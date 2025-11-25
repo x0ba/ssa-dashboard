@@ -25,10 +25,12 @@ export default async function AdminDashboard(params: {
 
   const client = await clerkClient();
 
-  const users = (await client.users.getUserList({
-    query,
-    limit: 100, // Clerk default is 10, increase to show more users
-  })).data;
+  const users = (
+    await client.users.getUserList({
+      query,
+      limit: 100, // Clerk default is 10, increase to show more users
+    })
+  ).data;
 
   return (
     <main className="container mx-auto px-4 py-10">

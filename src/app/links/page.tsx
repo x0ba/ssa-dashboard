@@ -1,13 +1,28 @@
 import { Search } from "~/app/_components/search";
-import { searchLinks } from "~/server/queries";
+import { TagFilter } from "~/app/_components/tag-filter";
+import { searchLinks, getAllTags } from "~/server/queries";
 import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
 import { Calendar, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
-async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
-  const links = await searchLinks(searchQuery);
+async function LinksGrid({
+  searchQuery,
+  tag,
+}: {
+  searchQuery?: string;
+  tag?: string;
+}) {
+  const links = await searchLinks(searchQuery, tag);
+
+  if (links.length === 0) {
+    return (
+      <div className="text-muted-foreground py-12 text-center">
+        No links found matching your filters.
+      </div>
+    );
+  }
 
   return (
     <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -50,10 +65,13 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
 export default async function LinksPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string }>;
+  searchParams: Promise<{ q?: string; tag?: string }>;
 }) {
   const params = await searchParams;
   const query = params.q ?? "";
+  const tag = params.tag;
+
+  const tags = await getAllTags();
 
   return (
     <main className="p-4">
@@ -68,7 +86,10 @@ export default async function LinksPage({
           <Search placeholder="Search links..." />
         </span>
       </div>
-      <LinksGrid searchQuery={query} />
+      <div className="mb-6 px-3">
+        <TagFilter tags={tags} />
+      </div>
+      <LinksGrid searchQuery={query} tag={tag} />
     </main>
   );
 }

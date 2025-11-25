@@ -35,13 +35,31 @@ export async function getRecentLinks(limit: number) {
   return links;
 }
 
-export async function searchLinks(query?: string) {
+export async function searchLinks(query?: string, tag?: string) {
   const links = await db.query.links.findMany({
-    where: (links, { ilike }) =>
-      query ? ilike(links.name, `%${query}%`) : undefined,
+    where: (links, { ilike, eq, and }) => {
+      const conditions = [];
+      if (query) conditions.push(ilike(links.name, `%${query}%`));
+      if (tag && tag !== "all") conditions.push(eq(links.tag, tag));
+      return conditions.length > 0 ? and(...conditions) : undefined;
+    },
     orderBy: (model, { desc }) => desc(model.createdAt),
   });
   return links;
+}
+
+export async function getAllTags() {
+  const links = await db.query.links.findMany({
+    columns: {
+      tag: true,
+    },
+  });
+  const tags = [
+    ...new Set(
+      links.map((link) => link.tag).filter((tag): tag is string => !!tag),
+    ),
+  ];
+  return tags.sort();
 }
 
 export async function getLinkById(id: number) {
