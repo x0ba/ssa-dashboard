@@ -43,3 +43,10 @@ export async function searchLinks(query?: string) {
   });
   return links;
 }
+
+export async function getLinkById(id: number) {
+  const link = await db.query.links.findFirst({
+    where: (links, { eq }) => eq(links.id, id),
+  });
+  return link;
+}
