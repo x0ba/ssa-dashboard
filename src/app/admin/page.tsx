@@ -33,10 +33,12 @@ export default async function AdminDashboard(params: {
   ).data;
 
   return (
-    <main className="container mx-auto px-4 py-10">
-      <div className="mb-8 space-y-2">
-        <h1 className="text-3xl font-bold tracking-tight">Admin Dashboard</h1>
-        <p className="text-muted-foreground">
+    <main className="container mx-auto px-4 py-6 md:py-10">
+      <div className="mb-6 space-y-2 md:mb-8">
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+          Admin Dashboard
+        </h1>
+        <p className="text-muted-foreground text-sm md:text-base">
           Manage users and roles. Restricted to users with the `admin` role.
         </p>
       </div>
@@ -49,7 +51,7 @@ export default async function AdminDashboard(params: {
         </p>
       )}
 
-      <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-6 grid gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
         {users.map((user) => {
           const primaryEmail = user.emailAddresses.find(
             (email) => email.id === user.primaryEmailAddressId,

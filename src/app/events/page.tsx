@@ -77,19 +77,21 @@ export default async function EventsPage({
   const query = params.q ?? "";
 
   return (
-    <main className="p-4">
-      <div className="flex w-full items-start justify-between p-3 pb-5">
+    <main className="p-4 md:p-6">
+      <div className="mb-6 flex w-full flex-col gap-4 p-3 md:flex-row md:items-start md:justify-between md:gap-6">
         <div className="flex flex-col gap-2">
-          <h2 className="text-4xl font-bold">Events</h2>
+          <h2 className="text-3xl font-bold md:text-4xl">Events</h2>
           <p className="text-muted-foreground text-sm">
             Some upcoming events for members
           </p>
         </div>
-        <span className="w-1/2">
+        <div className="w-full md:w-1/2 lg:w-1/3">
           <Search placeholder="Search events..." />
-        </span>
+        </div>
       </div>
-      <EventsGrid searchQuery={query} />
+      <div className="px-3">
+        <EventsGrid searchQuery={query} />
+      </div>
     </main>
   );
 }

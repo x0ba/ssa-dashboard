@@ -72,22 +72,26 @@ export default async function LinksAdminPage({
   const query = params.q ?? "";
 
   return (
-    <main className="p-4">
-      <div className="flex w-full items-start justify-between p-3 pb-5">
+    <main className="p-4 md:p-6">
+      <div className="mb-6 flex w-full flex-col gap-4 p-3 md:gap-6">
         <div className="flex flex-col gap-2">
-          <h2 className="text-4xl font-bold">Links</h2>
+          <h2 className="text-3xl font-bold md:text-4xl">Links</h2>
           <p className="text-muted-foreground text-sm">
             Add, edit, and manage links for members
           </p>
         </div>
-        <span className="w-3/5">
-          <Search placeholder="Search links..." />
-        </span>
-        <span className="flex w-1/4 justify-end">
-          <AddSheet />
-        </span>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex-1">
+            <Search placeholder="Search links..." />
+          </div>
+          <div className="shrink-0">
+            <AddSheet />
+          </div>
+        </div>
       </div>
-      <LinksGrid searchQuery={query} />
+      <div className="px-3">
+        <LinksGrid searchQuery={query} />
+      </div>
     </main>
   );
 }

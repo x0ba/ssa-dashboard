@@ -19,9 +19,9 @@ export const SearchUsers = () => {
           const queryTerm = formData.get("search") as string;
           router.push(pathname + "?search=" + queryTerm);
         }}
-        className="flex w-full max-w-sm items-end gap-2"
+        className="flex w-full max-w-2xl flex-col items-stretch gap-2 sm:flex-row sm:items-end"
       >
-        <div className="grid w-full items-center gap-1.5">
+        <div className="grid w-full flex-1 items-center gap-1.5">
           <Label htmlFor="search">Search Users</Label>
           <Input
             id="search"
@@ -30,7 +30,9 @@ export const SearchUsers = () => {
             placeholder="Search by name or email..."
           />
         </div>
-        <Button type="submit">Search</Button>
+        <Button type="submit" className="sm:shrink-0">
+          Search
+        </Button>
       </form>
     </div>
   );
