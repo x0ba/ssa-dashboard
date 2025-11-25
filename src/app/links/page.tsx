@@ -74,22 +74,24 @@ export default async function LinksPage({
   const tags = await getAllTags();
 
   return (
-    <main className="p-4">
-      <div className="flex w-full items-start justify-between p-3 pb-5">
+    <main className="p-4 md:p-6">
+      <div className="mb-6 flex w-full flex-col gap-4 p-3 md:flex-row md:items-start md:justify-between md:gap-6">
         <div className="flex flex-col gap-2">
-          <h2 className="text-4xl font-bold">Links</h2>
+          <h2 className="text-3xl font-bold md:text-4xl">Links</h2>
           <p className="text-muted-foreground text-sm">
             Some useful links for members
           </p>
         </div>
-        <span className="w-1/2">
+        <div className="w-full md:w-1/2 lg:w-1/3">
           <Search placeholder="Search links..." />
-        </span>
+        </div>
       </div>
       <div className="mb-6 px-3">
         <TagFilter tags={tags} />
       </div>
-      <LinksGrid searchQuery={query} tag={tag} />
+      <div className="px-3">
+        <LinksGrid searchQuery={query} tag={tag} />
+      </div>
     </main>
   );
 }

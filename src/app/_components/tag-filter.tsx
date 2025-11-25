@@ -20,15 +20,17 @@ export function TagFilter({ tags }: { tags: string[] }) {
   };
 
   return (
-    <Tabs value={currentTag} onValueChange={handleTagChange}>
-      <TabsList>
-        <TabsTrigger value="all">All</TabsTrigger>
-        {tags.map((tag) => (
-          <TabsTrigger key={tag} value={tag}>
-            {tag}
-          </TabsTrigger>
-        ))}
-      </TabsList>
-    </Tabs>
+    <div className="w-full overflow-x-auto">
+      <Tabs value={currentTag} onValueChange={handleTagChange}>
+        <TabsList className="inline-flex w-auto">
+          <TabsTrigger value="all">All</TabsTrigger>
+          {tags.map((tag) => (
+            <TabsTrigger key={tag} value={tag}>
+              {tag}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+    </div>
   );
 }
