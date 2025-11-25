@@ -32,6 +32,22 @@ export default function RootLayout({
           className={`${inter.variable}`}
           suppressHydrationWarning
         >
+          <head>
+            <script
+              dangerouslySetInnerHTML={{
+                __html: `
+                  (function() {
+                    const theme = localStorage.getItem('theme') || 'system';
+                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    const effectiveTheme = theme === 'system' ? systemTheme : theme;
+                    if (effectiveTheme === 'dark') {
+                      document.documentElement.classList.add('dark');
+                    }
+                  })()
+                `,
+              }}
+            />
+          </head>
           <body suppressHydrationWarning>
             <ThemeProvider
               attribute="class"
