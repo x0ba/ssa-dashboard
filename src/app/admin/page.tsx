@@ -12,6 +12,8 @@ import {
 } from "~/_components/ui/card";
 import { Button } from "~/_components/ui/button";
 
+export const dynamic = "force-dynamic";
+
 export default async function AdminDashboard(params: {
   searchParams: Promise<{ search?: string }>;
 }) {
@@ -23,7 +25,10 @@ export default async function AdminDashboard(params: {
 
   const client = await clerkClient();
 
-  const users = query ? (await client.users.getUserList({ query })).data : [];
+  const users = (await client.users.getUserList({
+    query,
+    limit: 100, // Clerk default is 10, increase to show more users
+  })).data;
 
   return (
     <main className="container mx-auto px-4 py-10">
@@ -36,8 +41,10 @@ export default async function AdminDashboard(params: {
 
       <SearchUsers />
 
-      {query && users.length === 0 && (
-        <p className="text-muted-foreground mt-4 text-sm">No users found.</p>
+      {users.length === 0 && (
+        <p className="text-muted-foreground mt-4 text-sm">
+          {query ? "No users found matching your search." : "No users found."}
+        </p>
       )}
 
       <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

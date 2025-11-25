@@ -2,6 +2,8 @@
 
 import { checkRole } from "~/lib/roles";
 import { clerkClient } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function setRole(formData: FormData) {
   const client = await clerkClient();
@@ -18,6 +20,8 @@ export async function setRole(formData: FormData) {
         publicMetadata: { role: formData.get("role") },
       },
     );
+    revalidatePath("/admin");
+    redirect("/admin");
     return { message: res.publicMetadata };
   } catch (err) {
     return { message: err };
@@ -34,6 +38,8 @@ export async function removeRole(formData: FormData) {
         publicMetadata: { role: null },
       },
     );
+    revalidatePath("/admin");
+    redirect("/admin");
     return { message: res.publicMetadata };
   } catch (err) {
     return { message: err };
