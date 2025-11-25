@@ -7,7 +7,7 @@ import { SidebarLayout } from "~/app/_components/sidebar-layout";
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { shadcn } from "@clerk/themes";
-import { Inter } from "next/font/google";
+import { Figtree } from "next/font/google";
 import { PostHogProvider } from "./_analytics/provider";
 
 export const metadata: Metadata = {
@@ -16,9 +16,8 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const inter = Inter({
+const figtree = Figtree({
   subsets: ["latin"],
-  variable: "--font-inter",
 });
 
 export default function RootLayout({
@@ -29,7 +28,7 @@ export default function RootLayout({
       <PostHogProvider>
         <html
           lang="en"
-          className={`${inter.variable}`}
+          className={`${figtree.className}`}
           suppressHydrationWarning
         >
           <body suppressHydrationWarning>
