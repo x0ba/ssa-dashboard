@@ -17,7 +17,10 @@ import Link from "next/link";
 import { getHomepageData } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";
 import type { InferSelectModel } from "drizzle-orm";
-import type { events as eventsTable, links as linksTable } from "~/server/db/schema";
+import type {
+  events as eventsTable,
+  links as linksTable,
+} from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
