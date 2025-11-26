@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "~/_components/ui/button";
 import {
   Sheet,
@@ -23,10 +23,18 @@ import { UploadButton } from "~/utils/uploadthing";
 
 export function AddSheet() {
   const [state, formAction, pending] = useActionState(createEvent, null);
-  const [imageUrl, setImageUrl] = useState<string>("");
+  const [imageUrl, setImageUrl] = useState<string>(
+    "https://ba961nquml.ufs.sh/f/8WZL3qQlnrib7eKeL1A2EOHTiwGzyx0cWs9IqK7hPnj3YaLU",
+  );
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (state === null && !pending) {
+      setOpen(false);
+    }
+  }, [state, pending]);
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline">Create Event</Button>
       </SheetTrigger>
@@ -53,7 +61,9 @@ export function AddSheet() {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="imageUrl">Image URL</FieldLabel>
+                <FieldLabel htmlFor="imageUrl">
+                  Flyer Image (optional)
+                </FieldLabel>
                 <FieldDescription>
                   Upload an image or paste a URL directly.
                 </FieldDescription>
@@ -78,7 +88,6 @@ export function AddSheet() {
                     placeholder="Or paste image URL here"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
-                    required
                   />
                 </div>
               </Field>

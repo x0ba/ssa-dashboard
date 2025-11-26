@@ -27,7 +27,7 @@ export async function createEvent(
   const dateStr = formData.get("date") as string;
 
   // Validate required fields
-  if (!name?.trim() || !location?.trim() || !imageUrl?.trim() || !dateStr) {
+  if (!name?.trim() || !location?.trim() || !dateStr) {
     return { error: "All fields are required" };
   }
 
@@ -38,7 +38,7 @@ export async function createEvent(
   if (location.length > 256) {
     return { error: "Location must be 256 characters or less" };
   }
-  if (imageUrl.length > 1024) {
+  if (imageUrl && imageUrl.length > 1024) {
     return { error: "Image URL must be 1024 characters or less" };
   }
 
@@ -53,7 +53,7 @@ export async function createEvent(
     await db.insert(events).values({
       name: name.trim(),
       location: location.trim(),
-      imageUrl: imageUrl.trim(),
+      imageUrl: imageUrl.trim() || null,
       date,
     });
   } catch (error) {
@@ -89,7 +89,7 @@ export async function updateEvent(
   const dateStr = formData.get("date") as string;
 
   // Validate required fields
-  if (!name?.trim() || !location?.trim() || !imageUrl?.trim() || !dateStr) {
+  if (!name?.trim() || !location?.trim() || !dateStr) {
     return { error: "All fields are required" };
   }
 
@@ -100,7 +100,7 @@ export async function updateEvent(
   if (location.length > 256) {
     return { error: "Location must be 256 characters or less" };
   }
-  if (imageUrl.length > 1024) {
+  if (imageUrl && imageUrl.length > 1024) {
     return { error: "Image URL must be 1024 characters or less" };
   }
 
@@ -117,7 +117,7 @@ export async function updateEvent(
       .set({
         name: name.trim(),
         location: location.trim(),
-        imageUrl: imageUrl.trim(),
+        imageUrl: imageUrl.trim() || null,
         date,
       })
       .where(eq(events.id, eventId));

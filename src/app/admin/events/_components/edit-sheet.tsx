@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { Button } from "~/_components/ui/button";
 import {
   Sheet,
@@ -24,7 +24,7 @@ import { UploadButton } from "~/utils/uploadthing";
 type Event = {
   id: number;
   name: string;
-  imageUrl: string;
+  imageUrl: string | null;
   location: string | null;
   date: Date;
   createdAt: Date;
@@ -33,7 +33,17 @@ type Event = {
 
 export function EditSheet({ event }: { event: Event }) {
   const [state, formAction, pending] = useActionState(updateEvent, null);
-  const [imageUrl, setImageUrl] = useState<string>(event.imageUrl);
+  const [imageUrl, setImageUrl] = useState<string>(
+    event.imageUrl ??
+      "https://ba961nquml.ufs.sh/f/8WZL3qQlnrib7eKeL1A2EOHTiwGzyx0cWs9IqK7hPnj3YaLU",
+  );
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (state === null && !pending) {
+      setOpen(false);
+    }
+  }, [state, pending]);
 
   // Format date for datetime-local input (YYYY-MM-DDTHH:mm)
   const formatDateTimeLocal = (date: Date) => {
@@ -46,7 +56,7 @@ export function EditSheet({ event }: { event: Event }) {
   };
 
   return (
-    <Sheet>
+    <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button variant="outline">Edit Event</Button>
       </SheetTrigger>
@@ -84,7 +94,9 @@ export function EditSheet({ event }: { event: Event }) {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="imageUrl">Image URL</FieldLabel>
+                <FieldLabel htmlFor="imageUrl">
+                  Flyer Image (optional)
+                </FieldLabel>
                 <FieldDescription>
                   Upload an image or paste a URL directly.
                 </FieldDescription>
@@ -108,7 +120,6 @@ export function EditSheet({ event }: { event: Event }) {
                   placeholder="or upload an image :)"
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
-                  required
                 />
               </Field>
 

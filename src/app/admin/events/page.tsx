@@ -40,8 +40,8 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                   <Clock className="h-4 w-4" />
                   {(() => {
                     const date = new Date(event.date);
-                    const hours = date.getUTCHours();
-                    const minutes = date.getUTCMinutes();
+                    const hours = date.getHours();
+                    const minutes = date.getMinutes();
                     const hour12 = hours % 12 || 12;
                     const ampm = hours >= 12 ? "PM" : "AM";
                     const minutesStr = minutes.toString().padStart(2, "0");
@@ -55,16 +55,18 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
               </CardDescription>
             </CardHeader>
           </div>
-          <div className="relative aspect-4/5 w-full flex-1">
-            <Image
-              src={event.imageUrl}
-              alt={event.name}
-              fill
-              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              priority={index < 4}
-              className="object-cover"
-            />
-          </div>
+          {event.imageUrl && (
+            <div className="relative aspect-4/5 w-full flex-1">
+              <Image
+                src={event.imageUrl}
+                alt={event.name}
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                priority={index < 4}
+                className="object-cover"
+              />
+            </div>
+          )}
           <div className="flex gap-2 p-2">
             <EditSheet event={event} />
             <DeleteButton eventId={event.id} />

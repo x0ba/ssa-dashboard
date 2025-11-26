@@ -32,7 +32,11 @@ export const events = createTable(
   (d) => ({
     id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
     name: d.varchar({ length: 256 }).notNull(),
-    imageUrl: d.varchar({ length: 1024 }).notNull(),
+    imageUrl: d
+      .varchar({ length: 1024 })
+      .default(
+        "https://ba961nquml.ufs.sh/f/8WZL3qQlnrib7eKeL1A2EOHTiwGzyx0cWs9IqK7hPnj3YaLU",
+      ),
     location: d.varchar({ length: 256 }).notNull(),
     date: d.timestamp({ withTimezone: true }).notNull(),
     createdAt: d

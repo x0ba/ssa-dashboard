@@ -55,7 +55,7 @@ export function AddSheet() {
 
               <Field>
                 <FieldLabel htmlFor="tag">Tag</FieldLabel>
-                <Input id="tag" name="tag" required />
+                <Input id="tag" name="tag" defaultValue="General" required />
               </Field>
             </FieldGroup>
 
