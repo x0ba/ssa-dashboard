@@ -27,6 +27,7 @@ type Event = {
   imageUrl: string | null;
   location: string | null;
   date: Date;
+  endDate: Date | null;
   createdAt: Date;
   updatedAt: Date | null;
 };
@@ -124,9 +125,9 @@ export function EditSheet({ event }: { event: Event }) {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="date">Date & Time</FieldLabel>
+                <FieldLabel htmlFor="date">Start Date & Time</FieldLabel>
                 <FieldDescription>
-                  When the event will take place.
+                  When the event will start.
                 </FieldDescription>
                 <Input
                   id="date"
@@ -134,6 +135,23 @@ export function EditSheet({ event }: { event: Event }) {
                   type="datetime-local"
                   defaultValue={formatDateTimeLocal(new Date(event.date))}
                   required
+                />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="endDate">End Date & Time (Optional)</FieldLabel>
+                <FieldDescription>
+                  When the event will end.
+                </FieldDescription>
+                <Input
+                  id="endDate"
+                  name="endDate"
+                  type="datetime-local"
+                  defaultValue={
+                    event.endDate
+                      ? formatDateTimeLocal(new Date(event.endDate))
+                      : ""
+                  }
                 />
               </Field>
             </FieldGroup>

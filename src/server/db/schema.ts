@@ -39,6 +39,7 @@ export const events = createTable(
       ),
     location: d.varchar({ length: 256 }).notNull(),
     date: d.timestamp({ withTimezone: true }).notNull(),
+    endDate: d.timestamp({ withTimezone: true }),
     createdAt: d
       .timestamp({ withTimezone: true })
       .$defaultFn(() => /* @__PURE__ */ new Date())

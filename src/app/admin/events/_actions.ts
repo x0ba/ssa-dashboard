@@ -25,6 +25,7 @@ export async function createEvent(
   const location = formData.get("location") as string;
   const imageUrl = formData.get("imageUrl") as string;
   const dateStr = formData.get("date") as string;
+  const endDateStr = formData.get("endDate") as string;
 
   // Validate required fields
   if (!name?.trim() || !location?.trim() || !dateStr) {
@@ -48,6 +49,18 @@ export async function createEvent(
     return { error: "Invalid date" };
   }
 
+  // Validate end date if provided
+  let endDate: Date | null = null;
+  if (endDateStr) {
+    endDate = new Date(endDateStr);
+    if (isNaN(endDate.getTime())) {
+      return { error: "Invalid end date" };
+    }
+    if (endDate < date) {
+      return { error: "End date cannot be before start date" };
+    }
+  }
+
   // Insert into database
   try {
     await db.insert(events).values({
@@ -55,6 +68,7 @@ export async function createEvent(
       location: location.trim(),
       imageUrl: imageUrl.trim() || null,
       date,
+      endDate,
     });
   } catch (error) {
     console.error("Error creating event:", error);
@@ -87,6 +101,7 @@ export async function updateEvent(
   const location = formData.get("location") as string;
   const imageUrl = formData.get("imageUrl") as string;
   const dateStr = formData.get("date") as string;
+  const endDateStr = formData.get("endDate") as string;
 
   // Validate required fields
   if (!name?.trim() || !location?.trim() || !dateStr) {
@@ -110,6 +125,18 @@ export async function updateEvent(
     return { error: "Invalid date" };
   }
 
+  // Validate end date if provided
+  let endDate: Date | null = null;
+  if (endDateStr) {
+    endDate = new Date(endDateStr);
+    if (isNaN(endDate.getTime())) {
+      return { error: "Invalid end date" };
+    }
+    if (endDate < date) {
+      return { error: "End date cannot be before start date" };
+    }
+  }
+
   // Update in database
   try {
     await db
@@ -119,6 +146,7 @@ export async function updateEvent(
         location: location.trim(),
         imageUrl: imageUrl.trim() || null,
         date,
+        endDate,
       })
       .where(eq(events.id, eventId));
   } catch (error) {

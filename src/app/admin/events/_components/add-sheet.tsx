@@ -93,11 +93,19 @@ export function AddSheet() {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="date">Date & Time</FieldLabel>
+                <FieldLabel htmlFor="date">Start Date & Time</FieldLabel>
                 <FieldDescription>
-                  When the event will take place.
+                  When the event will start.
                 </FieldDescription>
                 <Input id="date" name="date" type="datetime-local" required />
+              </Field>
+
+              <Field>
+                <FieldLabel htmlFor="endDate">End Date & Time (Optional)</FieldLabel>
+                <FieldDescription>
+                  When the event will end.
+                </FieldDescription>
+                <Input id="endDate" name="endDate" type="datetime-local" />
               </Field>
             </FieldGroup>
 

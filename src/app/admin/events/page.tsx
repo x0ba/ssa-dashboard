@@ -40,12 +40,21 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                   <Clock className="h-4 w-4" />
                   {(() => {
                     const date = new Date(event.date);
-                    const hours = date.getHours();
-                    const minutes = date.getMinutes();
-                    const hour12 = hours % 12 || 12;
-                    const ampm = hours >= 12 ? "PM" : "AM";
-                    const minutesStr = minutes.toString().padStart(2, "0");
-                    return `${hour12}:${minutesStr} ${ampm}`;
+                    const formatTime = (d: Date) => {
+                      const hours = d.getHours();
+                      const minutes = d.getMinutes();
+                      const hour12 = hours % 12 || 12;
+                      const ampm = hours >= 12 ? "PM" : "AM";
+                      const minutesStr = minutes.toString().padStart(2, "0");
+                      return `${hour12}:${minutesStr} ${ampm}`;
+                    };
+                    const start = formatTime(date);
+                    if (event.endDate) {
+                      const endDate = new Date(event.endDate);
+                      const end = formatTime(endDate);
+                      return `${start} - ${end}`;
+                    }
+                    return start;
                   })()}
                 </div>
                 <div className="flex items-center gap-1">
