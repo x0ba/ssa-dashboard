@@ -140,10 +140,9 @@ function RecentLinksSection({ links }: { links: LinkType[] }) {
                     </div>
                   </div>
                   <CardDescription className="text-muted-foreground text-sm">
-                    {(link.updatedAt ?? link.createdAt).toLocaleDateString(
-                      "en-US",
-                      { timeZone: "UTC" },
-                    )}
+                    {new Date(
+                      link.updatedAt ?? link.createdAt,
+                    ).toLocaleDateString("en-US", { timeZone: "UTC" })}
                   </CardDescription>
                 </CardHeader>
               </Card>

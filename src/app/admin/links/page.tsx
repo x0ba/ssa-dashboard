@@ -44,7 +44,7 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
             <CardDescription className="text-muted-foreground mt-2 text-sm">
               <div className="flex items-center gap-1.5">
                 <Calendar className="h-4 w-4" />
-                {(link.updatedAt ?? link.createdAt).toLocaleDateString(
+                {new Date(link.updatedAt ?? link.createdAt).toLocaleDateString(
                   "en-US",
                   { timeZone: "UTC" },
                 )}
