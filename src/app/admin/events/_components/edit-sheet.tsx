@@ -126,9 +126,7 @@ export function EditSheet({ event }: { event: Event }) {
 
               <Field>
                 <FieldLabel htmlFor="date">Start Date & Time</FieldLabel>
-                <FieldDescription>
-                  When the event will start.
-                </FieldDescription>
+                <FieldDescription>When the event will start.</FieldDescription>
                 <Input
                   id="date"
                   name="date"
@@ -139,10 +137,10 @@ export function EditSheet({ event }: { event: Event }) {
               </Field>
 
               <Field>
-                <FieldLabel htmlFor="endDate">End Date & Time (Optional)</FieldLabel>
-                <FieldDescription>
-                  When the event will end.
-                </FieldDescription>
+                <FieldLabel htmlFor="endDate">
+                  End Date & Time (Optional)
+                </FieldLabel>
+                <FieldDescription>When the event will end.</FieldDescription>
                 <Input
                   id="endDate"
                   name="endDate"
