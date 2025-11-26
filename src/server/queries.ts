@@ -11,18 +11,31 @@ export async function getHomepageData() {
 }
 
 export async function getRecentEvents(limit: number) {
+  // Get start of today in UTC to include events happening today
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+
   const events = await db.query.events.findMany({
+    where: (events, { gte }) => gte(events.date, startOfToday),
     limit,
-    orderBy: (model, { desc }) => desc(model.date),
+    orderBy: (model, { asc }) => asc(model.date),
   });
   return events;
 }
 
 export async function searchEvents(query?: string) {
+  // Get start of today in UTC to include events happening today
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+
   const events = await db.query.events.findMany({
-    where: (events, { ilike }) =>
-      query ? ilike(events.name, `%${query}%`) : undefined,
-    orderBy: (model, { desc }) => desc(model.date),
+    where: (events, { ilike, gte, and }) => {
+      const conditions = [];
+      conditions.push(gte(events.date, startOfToday));
+      if (query) conditions.push(ilike(events.name, `%${query}%`));
+      return conditions.length > 1 ? and(...conditions) : conditions[0];
+    },
+    orderBy: (model, { asc }) => asc(model.date),
   });
   return events;
 }

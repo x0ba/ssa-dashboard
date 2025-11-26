@@ -36,7 +36,8 @@ const config = {
   images: {
     remotePatterns: [
       {
-        hostname: "ba961nquml.ufs.sh",
+        protocol: "https",
+        hostname: "*",
       },
     ],
   },

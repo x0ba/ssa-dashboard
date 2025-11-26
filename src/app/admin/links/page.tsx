@@ -22,7 +22,7 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
       {links.map((link) => (
         <Card
           key={link.id}
-          className="py-0 transition-shadow duration-300 hover:shadow-lg"
+          className="flex flex-col gap-0 overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
         >
           <CardHeader className="flex flex-col gap-2 p-4">
             <div className="flex flex-row items-start gap-3">
