@@ -11,7 +11,7 @@ import { Figtree } from "next/font/google";
 import { PostHogProvider } from "./_analytics/provider";
 
 export const metadata: Metadata = {
-  title: "SSA Member Dashboard",
+  title: "SSA UCSD Member Dashboard",
   description: "A dashboard for SSA members and board members",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
