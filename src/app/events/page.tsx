@@ -15,11 +15,11 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
   const events = await searchEvents(searchQuery);
 
   return (
-    <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid w-full auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {events.map((event, index) => (
         <Card
           key={event.id}
-          className="flex flex-col gap-0 overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
+          className="flex h-full flex-col gap-0 overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
         >
           <div className="flex flex-col p-6">
             <CardHeader className="p-0">
@@ -52,7 +52,7 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
               </CardDescription>
             </CardHeader>
           </div>
-          <div className="relative aspect-square w-full">
+          <div className="relative aspect-4/5 w-full flex-1">
             <Image
               src={event.imageUrl}
               alt={event.name}
