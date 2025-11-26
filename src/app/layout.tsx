@@ -22,12 +22,24 @@ const figtree = Figtree({
 });
 
 // Inline script to prevent flash of wrong theme
+// Sets class AND background color inline before any paint
 const themeScript = `
   (function() {
-    const theme = localStorage.getItem('theme');
-    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isDark = theme === 'dark' || (theme !== 'light' && systemDark);
-    document.documentElement.classList.toggle('dark', isDark);
+    try {
+      var d = document.documentElement;
+      var theme = localStorage.getItem('theme');
+      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var isDark = theme === 'dark' || (!theme && systemDark) || (theme === 'system' && systemDark);
+      if (isDark) {
+        d.classList.add('dark');
+        d.style.colorScheme = 'dark';
+        d.style.background = 'oklch(0.145 0 0)';
+      } else {
+        d.classList.remove('dark');
+        d.style.colorScheme = 'light';
+        d.style.background = 'oklch(1 0 0)';
+      }
+    } catch (e) {}
   })();
 `;
 
