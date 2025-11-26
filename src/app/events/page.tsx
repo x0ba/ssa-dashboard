@@ -31,6 +31,7 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
+                    timeZone: "UTC",
                   })}
                 </div>
                 <div className="flex items-center gap-1">
@@ -38,8 +39,8 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                   {(() => {
                     const date = new Date(event.date);
                     const formatTime = (d: Date) => {
-                      const hours = d.getHours();
-                      const minutes = d.getMinutes();
+                      const hours = d.getUTCHours();
+                      const minutes = d.getUTCMinutes();
                       const hour12 = hours % 12 || 12;
                       const ampm = hours >= 12 ? "PM" : "AM";
                       const minutesStr = minutes.toString().padStart(2, "0");

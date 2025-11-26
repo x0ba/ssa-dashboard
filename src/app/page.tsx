@@ -30,7 +30,9 @@ type LinkType = InferSelectModel<typeof linksTable>;
 
 function WelcomeSection({ user }: { user: User | null }) {
   const userName = user?.fullName;
-  const currentDate = new Date().toLocaleDateString();
+  const currentDate = new Date().toLocaleDateString("en-US", {
+    timeZone: "UTC",
+  });
 
   return (
     <Card className="from-primary/10 via-primary/5 to-background border-primary/20 mt-4 bg-linear-to-r">
@@ -71,6 +73,7 @@ function RecentEventsSection({ events }: { events: Event[] }) {
                   year: "numeric",
                   month: "long",
                   day: "numeric",
+                  timeZone: "UTC",
                 })}
               </div>
               <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
@@ -137,8 +140,10 @@ function RecentLinksSection({ links }: { links: LinkType[] }) {
                     </div>
                   </div>
                   <CardDescription className="text-muted-foreground text-sm">
-                    {link.updatedAt?.toLocaleDateString() ??
-                      link.createdAt.toLocaleDateString()}
+                    {(link.updatedAt ?? link.createdAt).toLocaleDateString(
+                      "en-US",
+                      { timeZone: "UTC" },
+                    )}
                   </CardDescription>
                 </CardHeader>
               </Card>

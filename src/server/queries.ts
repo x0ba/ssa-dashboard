@@ -40,6 +40,15 @@ export async function searchEvents(query?: string) {
   return events;
 }
 
+export async function searchAllEvents(query?: string) {
+  const events = await db.query.events.findMany({
+    where: (events, { ilike }) =>
+      query ? ilike(events.name, `%${query}%`) : undefined,
+    orderBy: (model, { desc }) => desc(model.date),
+  });
+  return events;
+}
+
 export async function getRecentLinks(limit: number) {
   const links = await db.query.links.findMany({
     limit,

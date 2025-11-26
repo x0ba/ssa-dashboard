@@ -1,5 +1,5 @@
 import { Search } from "~/app/_components/search";
-import { searchEvents } from "~/server/queries";
+import { searchAllEvents } from "~/server/queries";
 import {
   Card,
   CardHeader,
@@ -15,7 +15,7 @@ import { DeleteButton } from "./_components/delete-button";
 export const dynamic = "force-dynamic";
 
 async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
-  const events = await searchEvents(searchQuery);
+  const events = await searchAllEvents(searchQuery);
 
   return (
     <div className="grid w-full auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -34,6 +34,7 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
+                    timeZone: "UTC",
                   })}
                 </div>
                 <div className="flex items-center gap-1">
@@ -41,8 +42,8 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                   {(() => {
                     const date = new Date(event.date);
                     const formatTime = (d: Date) => {
-                      const hours = d.getHours();
-                      const minutes = d.getMinutes();
+                      const hours = d.getUTCHours();
+                      const minutes = d.getUTCMinutes();
                       const hour12 = hours % 12 || 12;
                       const ampm = hours >= 12 ? "PM" : "AM";
                       const minutesStr = minutes.toString().padStart(2, "0");
