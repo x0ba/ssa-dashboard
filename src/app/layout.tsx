@@ -21,6 +21,16 @@ const figtree = Figtree({
   display: "swap",
 });
 
+// Inline script to prevent flash of wrong theme
+const themeScript = `
+  (function() {
+    const theme = localStorage.getItem('theme');
+    const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDark = theme === 'dark' || (theme !== 'light' && systemDark);
+    document.documentElement.classList.toggle('dark', isDark);
+  })();
+`;
+
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -32,6 +42,9 @@ export default function RootLayout({
           className={`${figtree.className}`}
           suppressHydrationWarning
         >
+          <head>
+            <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+          </head>
           <body suppressHydrationWarning>
             <ThemeProvider
               attribute="class"
