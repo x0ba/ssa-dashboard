@@ -8,11 +8,15 @@ const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
+/** @type {import("typescript-eslint").ConfigArray} */
+// @ts-expect-error -- types between @eslint/compat and typescript-eslint are incompatible
+const nextConfig = fixupConfigRules(compat.extends("next/core-web-vitals"));
+
 export default tseslint.config(
   {
     ignores: [".next", "next-env.d.ts"],
   },
-  ...fixupConfigRules(compat.extends("next/core-web-vitals")),
+  ...nextConfig,
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
