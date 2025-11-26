@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every 60 seconds
 
 async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
   const events = await searchEvents(searchQuery);

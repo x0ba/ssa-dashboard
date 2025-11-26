@@ -23,7 +23,7 @@ import type {
 } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every 60 seconds
 
 type Event = InferSelectModel<typeof eventsTable>;
 type LinkType = InferSelectModel<typeof linksTable>;

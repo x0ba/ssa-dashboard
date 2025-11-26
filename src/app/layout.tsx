@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 
 const figtree = Figtree({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export default function RootLayout({

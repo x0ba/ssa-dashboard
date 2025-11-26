@@ -38,7 +38,11 @@ const config = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "*",
+        hostname: "utfs.io", // UploadThing
+      },
+      {
+        protocol: "https",
+        hostname: "*.ufs.sh", // UploadThing alternative
       },
     ],
   },

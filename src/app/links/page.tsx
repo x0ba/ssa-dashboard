@@ -5,7 +5,7 @@ import { Card, CardHeader, CardDescription } from "~/_components/ui/card";
 import { Calendar, Link as LinkIcon } from "lucide-react";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60; // Revalidate every 60 seconds
 
 async function LinksGrid({
   searchQuery,

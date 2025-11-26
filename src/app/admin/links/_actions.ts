@@ -3,7 +3,7 @@
 import { db } from "~/server/db";
 import { links } from "~/server/db/schema";
 import { checkRole } from "~/lib/roles";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
@@ -64,6 +64,7 @@ export async function createLink(
   }
 
   // Revalidate and redirect
+  revalidateTag("links");
   revalidatePath("/admin/links");
   redirect("/admin/links");
 }
@@ -118,6 +119,7 @@ export async function updateLink(
     return { error: "Failed to update link. Please try again." };
   }
 
+  revalidateTag("links");
   revalidatePath("/admin/links");
   redirect("/admin/links");
 }
@@ -143,6 +145,7 @@ export async function deleteLink(
     return { error: "Failed to delete link. Please try again." };
   }
 
+  revalidateTag("links");
   revalidatePath("/admin/links");
   redirect("/admin/links");
 }

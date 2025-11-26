@@ -3,7 +3,7 @@
 import { checkRole } from "~/lib/roles";
 import { db } from "~/server/db";
 import { events } from "~/server/db/schema";
-import { revalidatePath } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { eq } from "drizzle-orm";
 import { redirect } from "next/navigation";
 
@@ -75,6 +75,7 @@ export async function createEvent(
     return { error: "Database error: Unable to create event." };
   }
 
+  revalidateTag("events");
   revalidatePath("/admin/events");
   redirect("/admin/events");
 }
@@ -154,6 +155,7 @@ export async function updateEvent(
     return { error: "Database error: Unable to update event." };
   }
 
+  revalidateTag("events");
   revalidatePath("/admin/events");
   return null;
 }
@@ -181,6 +183,7 @@ export async function deleteEvent(
     throw new Error("Database error: Unable to delete event.");
   }
 
+  revalidateTag("events");
   revalidatePath("/admin/events");
   redirect("/admin/events");
 }
