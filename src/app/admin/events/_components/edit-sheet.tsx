@@ -98,9 +98,7 @@ export function EditSheet({ event }: { event: Event }) {
                 <FieldLabel htmlFor="imageUrl">
                   Flyer Image (optional)
                 </FieldLabel>
-                <FieldDescription>
-                  Upload an image or paste a URL directly.
-                </FieldDescription>
+                <FieldDescription>Upload an image.</FieldDescription>
                 <UploadButton
                   endpoint={"imageUploader"}
                   onClientUploadComplete={(res) => {
@@ -118,7 +116,7 @@ export function EditSheet({ event }: { event: Event }) {
                   id="imageUrl"
                   name="imageUrl"
                   type="url"
-                  placeholder="or upload an image :)"
+                  hidden
                   value={imageUrl}
                   onChange={(e) => setImageUrl(e.target.value)}
                 />

@@ -64,9 +64,7 @@ export function AddSheet() {
                 <FieldLabel htmlFor="imageUrl">
                   Flyer Image (optional)
                 </FieldLabel>
-                <FieldDescription>
-                  Upload an image or paste a URL directly.
-                </FieldDescription>
+                <FieldDescription>Upload an image.</FieldDescription>
                 <div className="flex flex-col gap-2">
                   <UploadButton
                     endpoint={"imageUploader"}
@@ -85,7 +83,7 @@ export function AddSheet() {
                     id="imageUrl"
                     name="imageUrl"
                     type="url"
-                    placeholder="Or paste image URL here"
+                    hidden
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
                   />
