@@ -66,9 +66,11 @@ export function AddSheet() {
             )}
           </div>
           <SheetFooter>
-            <Button type="submit" className="w-full" disabled={pending}>
-              {pending ? "Creating..." : "Submit"}
-            </Button>
+            <form action={formAction} className="w-full">
+              <Button type="submit" className="w-full" disabled={pending}>
+                {pending ? "Creating..." : "Submit"}
+              </Button>
+            </form>
           </SheetFooter>
         </form>
       </SheetContent>

@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { index, pgTableCreator } from "drizzle-orm/pg-core";
+import { index, pgTableCreator, unique } from "drizzle-orm/pg-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -47,4 +47,34 @@ export const events = createTable(
     updatedAt: d.timestamp({ withTimezone: true }).$onUpdate(() => new Date()),
   }),
   (t) => [index("events_name_idx").on(t.name)],
+);
+
+export const rsvps = createTable(
+  "rsvp",
+  (d) => ({
+    id: d.integer().primaryKey().generatedByDefaultAsIdentity(),
+
+    // FOREIGN KEY: This links the RSVP to the specific event.
+    // { onDelete: "cascade" } automatically removes these RSVPs if the parent Event is deleted.
+    eventId: d
+      .integer()
+      .notNull()
+      .references(() => events.id, { onDelete: "cascade" }),
+
+    // Guest details
+    name: d.varchar({ length: 256 }).notNull(),
+    email: d.varchar({ length: 256 }).notNull(),
+
+    createdAt: d
+      .timestamp({ withTimezone: true })
+      .notNull()
+      .$defaultFn(() => new Date()),
+  }),
+  (t) => [
+    // INDEX: Makes fetching "all guests for event X" extremely fast
+    index("rsvp_event_id_idx").on(t.eventId),
+
+    // CONSTRAINT: Ensures one email cannot RSVP twice for the same event
+    unique("unique_rsvp_per_event").on(t.eventId, t.email),
+  ],
 );

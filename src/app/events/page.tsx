@@ -1,18 +1,42 @@
 import { Search } from "~/app/_components/search";
-import { searchEvents } from "~/server/queries";
+import { searchEvents, checkUserRsvp } from "~/server/queries";
 import {
   Card,
   CardHeader,
   CardDescription,
   CardTitle,
+  CardFooter,
 } from "~/_components/ui/card";
 import Image from "next/image";
 import { Calendar, Clock, MapPin } from "lucide-react";
+import RsvpButton from "./_components/rsvp-button";
+import { auth, clerkClient } from "@clerk/nextjs/server";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
   const events = await searchEvents(searchQuery);
+
+  // Get user email to check RSVP status
+  const { userId } = await auth();
+  let userEmail: string | undefined;
+
+  if (userId) {
+    const client = await clerkClient();
+    const user = await client.users.getUser(userId);
+    userEmail = user.emailAddresses[0]?.emailAddress;
+  }
+
+  // Check RSVP status for all events if user is logged in
+  const rsvpStatuses = new Map<number, boolean>();
+  if (userEmail) {
+    const statuses = await Promise.all(
+      events.map((event) => checkUserRsvp(event.id, userEmail)),
+    );
+    events.forEach((event, index) => {
+      rsvpStatuses.set(event.id, statuses[index] ?? false);
+    });
+  }
 
   return (
     <div className="grid w-full auto-rows-fr grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -61,6 +85,12 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
                 </div>
               </CardDescription>
             </CardHeader>
+            <CardFooter className="p-0 pt-4">
+              <RsvpButton
+                eventId={event.id}
+                isRsvpd={rsvpStatuses.get(event.id) ?? false}
+              />
+            </CardFooter>
           </div>
           {event.imageUrl && (
             <div className="relative aspect-4/5 w-full flex-1">

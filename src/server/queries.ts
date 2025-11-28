@@ -134,3 +134,17 @@ export const getLinkById = unstable_cache(
   ["link-by-id"],
   { revalidate: 60, tags: ["links"] },
 );
+
+export async function checkUserRsvp(
+  eventId: number,
+  email: string,
+): Promise<boolean> {
+  const rsvp = await db.query.rsvps.findFirst({
+    where: (rsvps, { eq, and }) => {
+      const eventIdCondition = eq(rsvps.eventId, eventId);
+      const emailCondition = eq(rsvps.email, email);
+      return and(eventIdCondition, emailCondition);
+    },
+  });
+  return !!rsvp;
+}
