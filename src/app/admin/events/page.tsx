@@ -90,9 +90,9 @@ async function EventsGrid({ searchQuery }: { searchQuery?: string }) {
               </div>
               <DeleteButton eventId={event.id} />
             </div>
-            <Button asChild variant="outline" className="w-full">
+            {/* <Button asChild variant="outline" className="w-full">
               <Link href={`/admin/events/${event.id}/rsvps`}>View RSVPs</Link>
-            </Button>
+            </Button> */}
           </div>
         </Card>
       ))}

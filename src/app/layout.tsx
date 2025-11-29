@@ -2,6 +2,7 @@ import "~/styles/globals.css";
 
 import { ThemeProvider } from "~/app/_components/theme-provider";
 import { SidebarLayout } from "~/app/_components/sidebar-layout";
+import { Toaster } from "~/_components/ui/sonner";
 // import "@uploadthing/react/styles.css";
 
 import { type Metadata } from "next";
@@ -65,6 +66,7 @@ export default function RootLayout({
               disableTransitionOnChange
             >
               <SidebarLayout>{children}</SidebarLayout>
+              <Toaster position="bottom-left" />
             </ThemeProvider>
           </body>
         </html>
