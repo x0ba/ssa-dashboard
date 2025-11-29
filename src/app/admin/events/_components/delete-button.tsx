@@ -8,7 +8,7 @@ export function DeleteButton({ eventId }: { eventId: number }) {
   const [state, formAction, pending] = useActionState(deleteEvent, null);
 
   return (
-    <form action={formAction} className="w-full">
+    <form action={formAction} className="flex-1">
       <input type="hidden" name="eventId" value={eventId} />
       <Button
         type="submit"

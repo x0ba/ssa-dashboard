@@ -24,15 +24,16 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
           key={link.id}
           className="flex flex-col gap-0 overflow-hidden p-0 transition-shadow duration-300 hover:shadow-lg"
         >
-          <CardHeader className="flex flex-col gap-2 p-4">
+          <CardHeader className="flex flex-col gap-3 p-4">
             <div className="flex flex-row items-start gap-3">
-              <LinkIcon className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
-              <div className="flex flex-col gap-1">
+              <LinkIcon className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 p-2 text-blue-800" />
+              <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <Link
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold transition-colors duration-300 hover:text-blue-800"
+                  className="truncate font-semibold transition-colors duration-300 hover:text-blue-800"
+                  title={link.name}
                 >
                   {link.name}
                 </Link>
@@ -41,22 +42,23 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
                 </span>
               </div>
             </div>
-            <CardDescription className="text-muted-foreground mt-2 text-sm">
+            <CardDescription className="text-muted-foreground text-sm">
               <div className="flex items-center gap-1.5">
-                <Calendar className="h-4 w-4" />
-                {new Date(link.updatedAt ?? link.createdAt).toLocaleDateString(
-                  "en-US",
-                  { timeZone: "UTC" },
-                )}
+                <Calendar className="h-4 w-4 shrink-0" />
+                <span className="truncate">
+                  {new Date(
+                    link.updatedAt ?? link.createdAt,
+                  ).toLocaleDateString("en-US", { timeZone: "UTC" })}
+                </span>
               </div>
             </CardDescription>
-            <CardAction className="mt-2 flex w-full gap-2">
-              <span className="flex-1">
+            <CardAction className="flex w-full gap-2">
+              <div className="min-w-0 flex-1">
                 <EditSheet link={link} />
-              </span>
-              <span className="shrink-0">
+              </div>
+              <div className="w-[100px] shrink-0">
                 <DeleteButton linkId={link.id} />
-              </span>
+              </div>
             </CardAction>
           </CardHeader>
         </Card>

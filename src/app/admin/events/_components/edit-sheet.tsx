@@ -21,6 +21,8 @@ import { Input } from "~/_components/ui/input";
 import { updateEvent } from "../_actions";
 import { UploadButton } from "~/utils/uploadthing";
 
+import { toast } from "sonner";
+
 type Event = {
   id: number;
   name: string;
@@ -38,6 +40,7 @@ export function EditSheet({ event }: { event: Event }) {
     event.imageUrl ??
       "https://ba961nquml.ufs.sh/f/8WZL3qQlnrib7eKeL1A2EOHTiwGzyx0cWs9IqK7hPnj3YaLU",
   );
+  const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -59,7 +62,9 @@ export function EditSheet({ event }: { event: Event }) {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
-        <Button variant="outline">Edit Event</Button>
+        <Button variant="outline" className="w-full">
+          Edit Event
+        </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader>
@@ -106,12 +111,20 @@ export function EditSheet({ event }: { event: Event }) {
                     const url = res[0]?.ufsUrl; // or res[0]?.url depending on UploadThing version
                     if (url) {
                       setImageUrl(url); // This updates your state
+                      setUploadedFileName(res[0]?.name ?? "Image uploaded");
+                      toast.success("Image uploaded successfully");
                     }
                   }}
                   onUploadError={(error) => {
                     console.error("Upload failed:", error);
+                    toast.error("Upload failed");
                   }}
                 />
+                {uploadedFileName && (
+                  <div className="text-muted-foreground text-sm">
+                    Uploaded: {uploadedFileName}
+                  </div>
+                )}
                 <Input
                   id="imageUrl"
                   name="imageUrl"
