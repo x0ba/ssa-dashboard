@@ -19,7 +19,7 @@ import {
 } from "~/_components/ui/field";
 import { Input } from "~/_components/ui/input";
 import { createEvent } from "../_actions";
-import { UploadButton } from "~/utils/uploadthing";
+import { UploadDropzone } from "~/utils/uploadthing";
 
 import { toast } from "sonner";
 
@@ -46,7 +46,7 @@ export function AddSheet() {
           <SheetTitle>Create Event</SheetTitle>
           <SheetDescription>Create a new event.</SheetDescription>
         </SheetHeader>
-        <form action={formAction} className="flex flex-1 flex-col">
+        <form action={formAction} className="flex min-h-0 flex-1 flex-col">
           <div className="flex-1 overflow-y-auto px-4">
             <FieldGroup>
               <Field>
@@ -67,9 +67,8 @@ export function AddSheet() {
                 <FieldLabel htmlFor="imageUrl">
                   Flyer Image (optional)
                 </FieldLabel>
-                <FieldDescription>Upload an image.</FieldDescription>
                 <div className="flex flex-col gap-2">
-                  <UploadButton
+                  <UploadDropzone
                     endpoint={"imageUploader"}
                     onClientUploadComplete={(res) => {
                       // Extract the URL from the response
