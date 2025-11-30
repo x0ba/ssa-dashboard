@@ -117,7 +117,7 @@ export function AddSheet() {
             </FieldGroup>
 
             {state?.error && (
-              <div className="mt-4 rounded-md bg-red-50 p-3 text-sm text-red-800 dark:bg-red-900/20 dark:text-red-400">
+              <div className="bg-destructive/15 text-destructive dark:bg-destructive/20 mt-4 rounded-md p-3 text-sm">
                 {state.error}
               </div>
             )}

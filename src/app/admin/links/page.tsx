@@ -26,18 +26,18 @@ async function LinksGrid({ searchQuery }: { searchQuery?: string }) {
         >
           <CardHeader className="flex flex-col gap-3 p-4">
             <div className="flex flex-row items-start gap-3">
-              <LinkIcon className="h-10 w-10 shrink-0 rounded-lg bg-blue-100 p-2 text-blue-800" />
+              <LinkIcon className="bg-primary/10 text-primary h-10 w-10 shrink-0 rounded-lg p-2" />
               <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <Link
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="truncate font-semibold transition-colors duration-300 hover:text-blue-800"
+                  className="hover:text-primary truncate font-semibold transition-colors duration-300"
                   title={link.name}
                 >
                   {link.name}
                 </Link>
-                <span className="w-fit rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
+                <span className="bg-primary/10 text-primary w-fit rounded-full px-2 py-0.5 text-xs font-medium">
                   {link.tag}
                 </span>
               </div>

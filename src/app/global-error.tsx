@@ -37,8 +37,8 @@ export default function GlobalError({
         <div className="bg-muted/30 flex min-h-screen flex-col items-center justify-center p-4">
           <Card className="w-full max-w-md shadow-lg">
             <CardHeader className="text-center">
-              <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
-                <AlertCircle className="h-6 w-6 text-red-600 dark:text-red-500" />
+              <div className="bg-destructive/10 dark:bg-destructive/20 mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full">
+                <AlertCircle className="text-destructive h-6 w-6" />
               </div>
               <CardTitle className="text-2xl font-bold">
                 Something went wrong!

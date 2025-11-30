@@ -22,7 +22,7 @@ export function UserInfoSection({ user }: { user: User | null }) {
       </CardHeader>
       <CardContent className="flex flex-col gap-2">
         <div className="flex flex-row items-center gap-3">
-          <UserIcon className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
+          <UserIcon className="bg-primary/10 text-primary h-10 w-10 rounded-lg p-2" />
           <div className="flex flex-col gap-0.5">
             <span className="font-semibold">{user?.fullName}</span>
             <span className="text-muted-foreground text-sm">
@@ -31,17 +31,17 @@ export function UserInfoSection({ user }: { user: User | null }) {
           </div>
         </div>
         <div className="flex flex-row items-center gap-3">
-          <Music className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
+          <Music className="bg-primary/10 text-primary h-10 w-10 rounded-lg p-2" />
           <span className="font-semibold">{userInstrument}</span>
         </div>
         <div className="flex flex-row items-center gap-3">
-          <BookOpenText className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
+          <BookOpenText className="bg-primary/10 text-primary h-10 w-10 rounded-lg p-2" />
           <div className="flex flex-col gap-1">
             <span className="font-semibold">{userMajor}</span>
           </div>
         </div>
         <div className="flex flex-row items-center gap-3">
-          <GraduationCap className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
+          <GraduationCap className="bg-primary/10 text-primary h-10 w-10 rounded-lg p-2" />
           <div className="flex flex-col gap-1">
             <span className="font-semibold">Class of {userGraduationYear}</span>
           </div>

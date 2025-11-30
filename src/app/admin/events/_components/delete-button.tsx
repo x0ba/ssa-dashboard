@@ -12,13 +12,14 @@ export function DeleteButton({ eventId }: { eventId: number }) {
       <input type="hidden" name="eventId" value={eventId} />
       <Button
         type="submit"
-        className="w-full bg-red-400 hover:bg-red-500"
+        className="w-full"
+        variant="destructive"
         disabled={pending}
       >
         {pending ? "Deleting..." : "Delete"}
       </Button>
       {state?.error && (
-        <div className="mt-2 text-xs text-red-600">{state.error}</div>
+        <div className="text-destructive mt-2 text-xs">{state.error}</div>
       )}
     </form>
   );
