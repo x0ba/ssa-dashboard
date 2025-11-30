@@ -76,6 +76,31 @@ export default async function AdminDashboard(params: {
                   </span>
                 </div>
 
+                <div className="grid grid-cols-2 gap-2 text-sm">
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground text-xs">
+                      Instrument
+                    </span>
+                    <span className="truncate font-medium">
+                      {(user.publicMetadata.instrument as string) || "N/A"}
+                    </span>
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-muted-foreground text-xs">Major</span>
+                    <span className="truncate font-medium">
+                      {(user.publicMetadata.major as string) || "N/A"}
+                    </span>
+                  </div>
+                  <div className="col-span-2 flex flex-col">
+                    <span className="text-muted-foreground text-xs">
+                      Class of
+                    </span>
+                    <span className="truncate font-medium">
+                      {(user.publicMetadata.graduationYear as string) || "N/A"}
+                    </span>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 gap-2">
                   <div className="grid grid-cols-2 gap-2">
                     <form

@@ -1,32 +1,16 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "~/_components/ui/card";
+import { Card, CardContent, CardHeader } from "~/_components/ui/card";
 import type { User } from "@clerk/nextjs/server";
-import {
-  Calendar,
-  Clock,
-  ExternalLink,
-  Link as LinkIcon,
-  MapPin,
-  Music,
-} from "lucide-react";
+import { Calendar, Clock, ExternalLink, MapPin, Music } from "lucide-react";
 import Link from "next/link";
 import { getHomepageData, getUserRsvps } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";
 import type { InferSelectModel } from "drizzle-orm";
-import type {
-  events as eventsTable,
-  links as linksTable,
-} from "~/server/db/schema";
+import type { events as eventsTable } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
 export const revalidate = 60; // Revalidate every 60 seconds
 
 type Event = InferSelectModel<typeof eventsTable>;
-type LinkType = InferSelectModel<typeof linksTable>;
 
 function WelcomeSection({ user }: { user: User | null }) {
   const userName = user?.fullName;
@@ -54,100 +38,59 @@ function WelcomeSection({ user }: { user: User | null }) {
 
 function RecentEventsSection({ events }: { events: Event[] }) {
   return (
-    <Card className="gap-2">
+    <Card className="col-span-full gap-2">
       <CardHeader>
         <span className="text-2xl font-bold">Upcoming Events</span>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-4">
         {events.length === 0 ? (
           <span className="text-muted-foreground mb-2">
             No upcoming events :(
           </span>
         ) : (
-          events.map((event) => (
-            <div key={event.id} className="mb-2 flex flex-col gap-1">
-              <span className="font-medium">{event.name}</span>
-              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                <Calendar className="h-4 w-4" />
-                {new Date(event.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                  timeZone: "UTC",
-                })}
-              </div>
-              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                <Clock className="h-4 w-4" />
-                {(() => {
-                  const date = new Date(event.date);
-                  const hours = date.getUTCHours();
-                  const minutes = date.getUTCMinutes();
-                  const hour12 = hours % 12 || 12;
-                  const ampm = hours >= 12 ? "PM" : "AM";
-                  const minutesStr = minutes.toString().padStart(2, "0");
-                  return `${hour12}:${minutesStr} ${ampm}`;
-                })()}
-              </div>
-              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                <MapPin className="h-4 w-4" />
-                {event.location}
-              </div>
-            </div>
-          ))
-        )}
-        <Link
-          href="/events"
-          className="text-muted-foreground flex items-center gap-1.5 text-sm hover:underline"
-        >
-          <ExternalLink width={16} height={16} /> See all
-        </Link>
-      </CardContent>
-    </Card>
-  );
-}
-
-function RecentLinksSection({ links }: { links: LinkType[] }) {
-  return (
-    <Card className="gap-2 sm:col-span-1 lg:col-span-2">
-      <CardHeader>
-        <span className="text-2xl font-bold">Recent Links</span>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        {links.length === 0 ? (
-          <span className="text-muted-foreground mb-2">No linkies :(</span>
-        ) : (
-          <div className="grid grid-cols-1 justify-items-center gap-4 lg:grid-cols-2">
-            {links.map((link) => (
-              <Card
-                key={link.id}
-                className="w-full max-w-[320px] py-0 transition-shadow duration-300 hover:shadow-lg"
-              >
-                <CardHeader className="flex flex-col gap-2 p-4">
-                  <div className="flex flex-row items-start gap-3">
-                    <LinkIcon className="h-10 w-10 rounded-lg bg-blue-100 p-2 text-blue-800" />
-                    <div className="flex flex-col gap-1">
-                      <Link
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="font-semibold transition-colors duration-300 hover:text-blue-800"
-                      >
-                        {link.name}
-                      </Link>
-                      <span className="w-fit rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-800">
-                        {link.tag}
-                      </span>
-                    </div>
+          <>
+            <div className="flex flex-row gap-4 overflow-x-auto pb-4">
+              {events.map((event) => (
+                <div
+                  key={event.id}
+                  className="flex min-w-[250px] flex-col gap-1 rounded-lg border p-3"
+                >
+                  <span className="font-medium">{event.name}</span>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <Calendar className="h-4 w-4" />
+                    {new Date(event.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      timeZone: "UTC",
+                    })}
                   </div>
-                  <CardDescription className="text-muted-foreground text-sm">
-                    {new Date(
-                      link.updatedAt ?? link.createdAt,
-                    ).toLocaleDateString("en-US", { timeZone: "UTC" })}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <Clock className="h-4 w-4" />
+                    {(() => {
+                      const date = new Date(event.date);
+                      const hours = date.getUTCHours();
+                      const minutes = date.getUTCMinutes();
+                      const hour12 = hours % 12 || 12;
+                      const ampm = hours >= 12 ? "PM" : "AM";
+                      const minutesStr = minutes.toString().padStart(2, "0");
+                      return `${hour12}:${minutesStr} ${ampm}`;
+                    })()}
+                  </div>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <MapPin className="h-4 w-4" />
+                    {event.location}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/events"
+              className="text-muted-foreground flex items-center gap-1.5 text-sm hover:underline"
+            >
+              <ExternalLink width={16} height={16} /> See all
+            </Link>
+          </>
         )}
       </CardContent>
     </Card>
@@ -160,60 +103,49 @@ function UserRsvpsSection({
   rsvps: Awaited<ReturnType<typeof getUserRsvps>>;
 }) {
   return (
-    <Card className="gap-2 sm:col-span-1 lg:col-span-2">
+    <Card className="flex flex-col gap-2 sm:col-span-1 lg:col-span-2">
       <CardHeader>
         <span className="text-2xl font-bold">Your RSVPs</span>
       </CardHeader>
-      <CardContent>
+      <CardContent className="flex flex-1 flex-row items-center gap-4 overflow-x-auto pb-4">
         {rsvps.length === 0 ? (
-          <span className="text-muted-foreground mb-2 block">
+          <span className="text-muted-foreground mb-2">
             You haven&apos;t RSVP&apos;d to any events yet.
           </span>
         ) : (
-          <div className="flex w-full gap-4 overflow-x-auto pb-4">
-            {rsvps.map((rsvp) => (
-              <Card
-                key={rsvp.id}
-                className="max-w-[280px] min-w-[280px] shrink-0 p-4"
-              >
-                <div className="flex flex-col gap-2">
-                  <span
-                    className="line-clamp-1 font-medium"
-                    title={rsvp.event.name}
-                  >
-                    {rsvp.event.name}
-                  </span>
-                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                    <Calendar className="h-4 w-4 shrink-0" />
-                    {new Date(rsvp.event.date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "long",
-                      day: "numeric",
-                      timeZone: "UTC",
-                    })}
-                  </div>
-                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                    <Clock className="h-4 w-4 shrink-0" />
-                    {(() => {
-                      const date = new Date(rsvp.event.date);
-                      const hours = date.getUTCHours();
-                      const minutes = date.getUTCMinutes();
-                      const hour12 = hours % 12 || 12;
-                      const ampm = hours >= 12 ? "PM" : "AM";
-                      const minutesStr = minutes.toString().padStart(2, "0");
-                      return `${hour12}:${minutesStr} ${ampm}`;
-                    })()}
-                  </div>
-                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-                    <MapPin className="h-4 w-4 shrink-0" />
-                    <span className="line-clamp-1" title={rsvp.event.location}>
-                      {rsvp.event.location}
-                    </span>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
+          rsvps.map((rsvp) => (
+            <div
+              key={rsvp.id}
+              className="flex min-w-[250px] flex-col gap-1 rounded-lg border p-3"
+            >
+              <span className="font-medium">{rsvp.event.name}</span>
+              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                <Calendar className="h-4 w-4" />
+                {new Date(rsvp.event.date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                  timeZone: "UTC",
+                })}
+              </div>
+              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                <Clock className="h-4 w-4" />
+                {(() => {
+                  const date = new Date(rsvp.event.date);
+                  const hours = date.getUTCHours();
+                  const minutes = date.getUTCMinutes();
+                  const hour12 = hours % 12 || 12;
+                  const ampm = hours >= 12 ? "PM" : "AM";
+                  const minutesStr = minutes.toString().padStart(2, "0");
+                  return `${hour12}:${minutesStr} ${ampm}`;
+                })()}
+              </div>
+              <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                <MapPin className="h-4 w-4" />
+                {rsvp.event.location}
+              </div>
+            </div>
+          ))
         )}
       </CardContent>
     </Card>
@@ -222,7 +154,7 @@ function UserRsvpsSection({
 
 export default async function HomePage() {
   const user = await currentUser();
-  const [{ events, links }, userRsvps] = await Promise.all([
+  const [{ events }, userRsvps] = await Promise.all([
     getHomepageData(),
     user
       ? getUserRsvps(user.emailAddresses[0]?.emailAddress ?? "")
@@ -234,10 +166,9 @@ export default async function HomePage() {
       <h1 className="text-4xl font-bold">Overview</h1>
       <WelcomeSection user={user} />
       <div className="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        <RecentEventsSection events={events} />
-        <RecentLinksSection links={links} />
-        <UserRsvpsSection rsvps={userRsvps} />
         <UserInfoSection user={user} />
+        <UserRsvpsSection rsvps={userRsvps} />
+        <RecentEventsSection events={events} />
       </div>
     </main>
   );
