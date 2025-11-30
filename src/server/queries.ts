@@ -77,6 +77,27 @@ export const searchAllEvents = unstable_cache(
   { revalidate: 60, tags: ["events"] },
 );
 
+export const getEventRsvps = unstable_cache(
+  async (eventId: number) => {
+    return await db.query.rsvps.findMany({
+      where: (rsvps, { eq }) => eq(rsvps.eventId, eventId),
+      orderBy: (model, { desc }) => desc(model.createdAt),
+    });
+  },
+  ["event-rsvps"],
+  { revalidate: 60, tags: ["rsvps"] },
+);
+
+export const getEventById = unstable_cache(
+  async (id: number) => {
+    return await db.query.events.findFirst({
+      where: (events, { eq }) => eq(events.id, id),
+    });
+  },
+  ["event-by-id"],
+  { revalidate: 60, tags: ["events"] },
+);
+
 export const getRecentLinks = unstable_cache(
   async (limit: number) => {
     const links = await db.query.links.findMany({
