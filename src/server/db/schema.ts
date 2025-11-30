@@ -1,6 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
+import { relations } from "drizzle-orm";
 import { index, pgTableCreator, unique } from "drizzle-orm/pg-core";
 
 /**
@@ -78,3 +79,14 @@ export const rsvps = createTable(
     unique("unique_rsvp_per_event").on(t.eventId, t.email),
   ],
 );
+
+export const eventsRelations = relations(events, ({ many }) => ({
+  rsvps: many(rsvps),
+}));
+
+export const rsvpsRelations = relations(rsvps, ({ one }) => ({
+  event: one(events, {
+    fields: [rsvps.eventId],
+    references: [events.id],
+  }),
+}));

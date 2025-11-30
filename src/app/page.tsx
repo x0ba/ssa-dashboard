@@ -14,7 +14,7 @@ import {
   Music,
 } from "lucide-react";
 import Link from "next/link";
-import { getHomepageData } from "~/server/queries";
+import { getHomepageData, getUserRsvps } from "~/server/queries";
 import { UserInfoSection } from "~/app/_components/user-info-section";
 import type { InferSelectModel } from "drizzle-orm";
 import type {
@@ -154,10 +154,79 @@ function RecentLinksSection({ links }: { links: LinkType[] }) {
   );
 }
 
+function UserRsvpsSection({
+  rsvps,
+}: {
+  rsvps: Awaited<ReturnType<typeof getUserRsvps>>;
+}) {
+  return (
+    <Card className="gap-2 sm:col-span-1 lg:col-span-2">
+      <CardHeader>
+        <span className="text-2xl font-bold">Your RSVPs</span>
+      </CardHeader>
+      <CardContent>
+        {rsvps.length === 0 ? (
+          <span className="text-muted-foreground mb-2 block">
+            You haven&apos;t RSVP&apos;d to any events yet.
+          </span>
+        ) : (
+          <div className="flex w-full gap-4 overflow-x-auto pb-4">
+            {rsvps.map((rsvp) => (
+              <Card
+                key={rsvp.id}
+                className="max-w-[280px] min-w-[280px] shrink-0 p-4"
+              >
+                <div className="flex flex-col gap-2">
+                  <span
+                    className="line-clamp-1 font-medium"
+                    title={rsvp.event.name}
+                  >
+                    {rsvp.event.name}
+                  </span>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <Calendar className="h-4 w-4 shrink-0" />
+                    {new Date(rsvp.event.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                      timeZone: "UTC",
+                    })}
+                  </div>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <Clock className="h-4 w-4 shrink-0" />
+                    {(() => {
+                      const date = new Date(rsvp.event.date);
+                      const hours = date.getUTCHours();
+                      const minutes = date.getUTCMinutes();
+                      const hour12 = hours % 12 || 12;
+                      const ampm = hours >= 12 ? "PM" : "AM";
+                      const minutesStr = minutes.toString().padStart(2, "0");
+                      return `${hour12}:${minutesStr} ${ampm}`;
+                    })()}
+                  </div>
+                  <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+                    <MapPin className="h-4 w-4 shrink-0" />
+                    <span className="line-clamp-1" title={rsvp.event.location}>
+                      {rsvp.event.location}
+                    </span>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default async function HomePage() {
-  const [user, { events, links }] = await Promise.all([
-    currentUser(),
+  const user = await currentUser();
+  const [{ events, links }, userRsvps] = await Promise.all([
     getHomepageData(),
+    user
+      ? getUserRsvps(user.emailAddresses[0]?.emailAddress ?? "")
+      : Promise.resolve([]),
   ]);
 
   return (
@@ -167,13 +236,7 @@ export default async function HomePage() {
       <div className="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         <RecentEventsSection events={events} />
         <RecentLinksSection links={links} />
-        <Card className="gap-2 sm:col-span-1 lg:col-span-2">
-          <CardHeader>
-            <span className="text-2xl font-bold">
-              idk wtf to put here yet its just a placeholder
-            </span>
-          </CardHeader>
-        </Card>
+        <UserRsvpsSection rsvps={userRsvps} />
         <UserInfoSection user={user} />
       </div>
     </main>
