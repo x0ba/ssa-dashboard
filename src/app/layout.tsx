@@ -22,28 +22,6 @@ const figtree = Figtree({
   display: "swap",
 });
 
-// Inline script to prevent flash of wrong theme
-// Sets class AND background color inline before any paint
-const themeScript = `
-  (function() {
-    try {
-      var d = document.documentElement;
-      var theme = localStorage.getItem('theme');
-      var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      var isDark = theme === 'dark' || (!theme && systemDark) || (theme === 'system' && systemDark);
-      if (isDark) {
-        d.classList.add('dark');
-        d.style.colorScheme = 'dark';
-        d.style.background = 'oklch(0.145 0 0)';
-      } else {
-        d.classList.remove('dark');
-        d.style.colorScheme = 'light';
-        d.style.background = 'oklch(1 0 0)';
-      }
-    } catch (e) {}
-  })();
-`;
-
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -55,9 +33,6 @@ export default function RootLayout({
           className={`${figtree.className}`}
           suppressHydrationWarning
         >
-          <head>
-            <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-          </head>
           <body suppressHydrationWarning>
             <ThemeProvider
               attribute="class"
