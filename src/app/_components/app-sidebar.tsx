@@ -11,6 +11,7 @@ import {
   SidebarHeader,
   SidebarMenuItem,
   SidebarGroupContent,
+  useSidebar,
 } from "~/_components/ui/sidebar";
 
 import {
@@ -80,6 +81,14 @@ export function AppSidebar({
   pathname: string;
   isAdmin: boolean;
 }) {
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  const handleLinkClick = () => {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  };
+
   return (
     <>
       <Sidebar>
@@ -113,7 +122,11 @@ export function AppSidebar({
                       const Icon = item.icon;
                       return (
                         <SidebarMenuItem key={item.id}>
-                          <SidebarMenuButton asChild isActive={isActive}>
+                          <SidebarMenuButton
+                            asChild
+                            isActive={isActive}
+                            onClick={handleLinkClick}
+                          >
                             <Link href={item.link}>
                               <Icon />
                               <span>{item.label}</span>
@@ -148,7 +161,11 @@ export function AppSidebar({
                         const Icon = item.icon;
                         return (
                           <SidebarMenuItem key={item.id}>
-                            <SidebarMenuButton asChild isActive={isActive}>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={isActive}
+                              onClick={handleLinkClick}
+                            >
                               <Link href={item.link}>
                                 <Icon />
                                 <span>{item.label}</span>
