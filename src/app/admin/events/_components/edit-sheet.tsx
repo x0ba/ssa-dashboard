@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useState, useRef } from "react";
 import { Button } from "~/_components/ui/button";
 import {
   Sheet,
@@ -43,10 +43,14 @@ export function EditSheet({ event }: { event: Event }) {
   const [uploadedFileName, setUploadedFileName] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
 
+  const wasPending = useRef(false);
+
   useEffect(() => {
-    if (state === null && !pending) {
+    if (wasPending.current && !pending && state === null) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setOpen(false);
     }
+    wasPending.current = pending;
   }, [state, pending]);
 
   // Format date for datetime-local input (YYYY-MM-DDTHH:mm) in UTC
