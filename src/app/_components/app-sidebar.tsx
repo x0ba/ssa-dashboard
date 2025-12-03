@@ -86,7 +86,7 @@ export function AppSidebar({
         <SidebarHeader>
           <div className="flex items-center gap-2">
             <Image
-              src="https://ba961nquml.ufs.sh/f/8WZL3qQlnribBWhmbCyk0pFvf4qzZU6HG2rjdxcKwEtXRoDn"
+              src="/logo.png"
               alt="SSA Logo"
               width={32}
               height={32}

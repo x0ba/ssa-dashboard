@@ -21,6 +21,11 @@
     "typecheck": "tsc --noEmit",
     "prepare": "husky"
   },
+  "lint-staged": {
+    "**/*": "tsc --noEmit",
+    "**/*": "prettier --write --ignore-unknown",
+    "**/*": "eslint"
+  },
   "dependencies": {
     "@clerk/nextjs": "^6.35.3",
     "@clerk/themes": "^2.4.38",
@@ -71,7 +76,9 @@
     "eslint": "^9.23.0",
     "eslint-config-next": "^15.2.3",
     "eslint-plugin-drizzle": "^0.2.3",
+    "eslint-plugin-react-hooks": "^7.0.1",
     "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "postcss": "^8.5.3",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.11",

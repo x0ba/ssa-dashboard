@@ -38,7 +38,7 @@ function WelcomeSection({ user }: { user: User | null }) {
 
 function RecentEventsSection({ events }: { events: Event[] }) {
   return (
-    <Card className="col-span-full gap-2">
+    <Card className="col-span-full max-w-full min-w-0 gap-2">
       <CardHeader>
         <span className="text-2xl font-bold">Upcoming Events</span>
       </CardHeader>
@@ -103,7 +103,7 @@ function UserRsvpsSection({
   rsvps: Awaited<ReturnType<typeof getUserRsvps>>;
 }) {
   return (
-    <Card className="flex flex-col gap-2 sm:col-span-1 lg:col-span-2">
+    <Card className="flex max-w-full min-w-0 flex-col gap-2 sm:col-span-1 lg:col-span-2">
       <CardHeader>
         <span className="text-2xl font-bold">Your RSVPs</span>
       </CardHeader>
@@ -162,7 +162,7 @@ export default async function HomePage() {
   ]);
 
   return (
-    <main className="p-6">
+    <main className="p-4 md:p-6">
       <h1 className="text-4xl font-bold">Overview</h1>
       <WelcomeSection user={user} />
       <div className="mt-6 grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
