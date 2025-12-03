@@ -53,6 +53,7 @@ export async function rsvpToEvent(
   }
 
   revalidateTag("events");
+  revalidateTag("rsvps");
   revalidatePath("/events");
   redirect("/events");
 }
@@ -88,6 +89,7 @@ export async function cancelRsvp(
   }
 
   revalidateTag("events");
+  revalidateTag("rsvps");
   revalidatePath("/events");
   redirect("/events");
 }
