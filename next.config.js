@@ -19,18 +19,18 @@ const config = {
     ignoreDuringBuilds: true,
   },
   // eslint-disable-next-line @typescript-eslint/require-await
-  async rewrites() {
-    return [
-      {
-        source: "/relay-uY0p/static/:path*",
-        destination: "https://us-assets.i.posthog.com/static/:path*",
-      },
-      {
-        source: "/relay-uY0p/:path*",
-        destination: "https://us.i.posthog.com/:path*",
-      },
-    ];
-  },
+  // async rewrites() {
+  //   return [
+  //     {
+  //       source: "/relay-uY0p/static/:path*",
+  //       destination: "https://us-assets.i.posthog.com/static/:path*",
+  //     },
+  //     {
+  //       source: "/relay-uY0p/:path*",
+  //       destination: "https://us.i.posthog.com/:path*",
+  //     },
+  //   ];
+  // },
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,
 
