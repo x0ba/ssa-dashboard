@@ -170,17 +170,13 @@ export async function checkUserRsvp(
   return !!rsvp;
 }
 
-export const getUserRsvps = unstable_cache(
-  async (email: string) => {
-    const userRsvps = await db.query.rsvps.findMany({
-      where: (rsvps, { eq }) => eq(rsvps.email, email),
-      with: {
-        event: true,
-      },
-      orderBy: (model, { desc }) => desc(model.createdAt),
-    });
-    return userRsvps;
-  },
-  ["user-rsvps"],
-  { revalidate: 60, tags: ["rsvps"] },
-);
+export const getUserRsvps = async (email: string) => {
+  const userRsvps = await db.query.rsvps.findMany({
+    where: (rsvps, { eq }) => eq(rsvps.email, email),
+    with: {
+      event: true,
+    },
+    orderBy: (model, { desc }) => desc(model.createdAt),
+  });
+  return userRsvps;
+};

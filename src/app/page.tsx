@@ -8,8 +8,6 @@ import type { InferSelectModel } from "drizzle-orm";
 import type { events as eventsTable } from "~/server/db/schema";
 import { currentUser } from "@clerk/nextjs/server";
 
-export const revalidate = 60; // Revalidate every 60 seconds
-
 type Event = InferSelectModel<typeof eventsTable>;
 
 function WelcomeSection({ user }: { user: User | null }) {
