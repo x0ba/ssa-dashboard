@@ -102,18 +102,25 @@ function UserRsvpsSection({
 }: {
   rsvps: Awaited<ReturnType<typeof getUserRsvps>>;
 }) {
+  const startOfToday = new Date();
+  startOfToday.setUTCHours(0, 0, 0, 0);
+
+  const upcomingRsvps = rsvps.filter((rsvp) => {
+    return rsvp.event.date >= startOfToday;
+  });
+
   return (
     <Card className="flex max-w-full min-w-0 flex-col gap-2 sm:col-span-1 lg:col-span-2">
       <CardHeader>
         <span className="text-2xl font-bold">Your RSVPs</span>
       </CardHeader>
       <CardContent className="flex flex-1 flex-row items-center gap-4 overflow-x-auto pb-4">
-        {rsvps.length === 0 ? (
+        {upcomingRsvps.length === 0 ? (
           <span className="text-muted-foreground mb-2">
-            You haven&apos;t RSVP&apos;d to any events yet.
+            You haven&apos;t RSVP&apos;d to any upcoming events yet.
           </span>
         ) : (
-          rsvps.map((rsvp) => (
+          upcomingRsvps.map((rsvp) => (
             <div
               key={rsvp.id}
               className="flex min-w-[250px] flex-col gap-1 rounded-lg border p-3"
