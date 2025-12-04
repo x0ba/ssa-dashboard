@@ -28,25 +28,25 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ClerkProvider appearance={{ theme: shadcn }}>
-      <PostHogProvider>
-        <html
-          lang="en"
-          className={`${figtree.className}`}
-          suppressHydrationWarning
-        >
-          <body suppressHydrationWarning>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <SidebarLayout>{children}</SidebarLayout>
-              <Toaster position="bottom-left" />
-            </ThemeProvider>
-          </body>
-        </html>
-      </PostHogProvider>
+      {/* <PostHogProvider> */}
+      <html
+        lang="en"
+        className={`${figtree.className}`}
+        suppressHydrationWarning
+      >
+        <body suppressHydrationWarning>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <SidebarLayout>{children}</SidebarLayout>
+            <Toaster position="bottom-left" />
+          </ThemeProvider>
+        </body>
+      </html>
+      {/* </PostHogProvider> */}
     </ClerkProvider>
   );
 }
