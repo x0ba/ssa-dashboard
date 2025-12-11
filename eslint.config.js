@@ -1,31 +1,32 @@
-import { fixupConfigRules } from "@eslint/compat";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
-// @ts-expect-error -- no types for this plugin
+// @ts-ignore -- no types for this plugin
 import drizzle from "eslint-plugin-drizzle";
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.dirname,
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-/** @type {import("typescript-eslint").ConfigArray} */
-// @ts-expect-error -- types between @eslint/compat and typescript-eslint are incompatible
-const nextConfig = fixupConfigRules(compat.extends("next/core-web-vitals"));
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+});
 
 export default tseslint.config(
   {
     ignores: [".next", "next-env.d.ts"],
   },
-  ...nextConfig,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.recommendedTypeChecked,
-  ...tseslint.configs.stylisticTypeChecked,
+  ...compat.extends("next/core-web-vitals"),
   {
     files: ["**/*.ts", "**/*.tsx"],
     plugins: {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       drizzle,
     },
+    extends: [
+      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
+      ...tseslint.configs.stylisticTypeChecked,
+    ],
     rules: {
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
