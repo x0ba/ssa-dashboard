@@ -22,7 +22,8 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "**/*": "eslint"
+    "**/*.{ts,tsx,js,jsx,mdx}": "eslint",
+    "**/*.{ts,tsx,js,jsx,mdx,css}": "prettier --write --cache"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.35.3",

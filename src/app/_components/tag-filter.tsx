@@ -23,9 +23,18 @@ export function TagFilter({ tags }: { tags: string[] }) {
     <div className="w-full overflow-x-auto">
       <Tabs value={currentTag} onValueChange={handleTagChange}>
         <TabsList className="inline-flex w-auto">
-          <TabsTrigger value="all">All</TabsTrigger>
+          <TabsTrigger
+            value="all"
+            className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground"
+          >
+            All
+          </TabsTrigger>
           {tags.map((tag) => (
-            <TabsTrigger key={tag} value={tag}>
+            <TabsTrigger
+              key={tag}
+              value={tag}
+              className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground dark:data-[state=active]:bg-primary dark:data-[state=active]:text-primary-foreground"
+            >
               {tag}
             </TabsTrigger>
           ))}
